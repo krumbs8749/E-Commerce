@@ -52,9 +52,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ab_user');
-        Schema::dropIfExists('ab_article');
-        Schema::dropIfExists('ab_articlecategory');
         Schema::dropIfExists('ab_article_has_category');
+        Schema::dropIfExists('ab_articlecategory');
+        Schema::dropIfExists('ab_article');
+        Schema::dropIfExists('ab_user');
     }
 };

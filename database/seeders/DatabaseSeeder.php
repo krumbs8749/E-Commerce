@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
                 Models\AbArticle::create([
                     "id" => $data['0'],
                     "ab_name" => $data['1'],
-                    "ab_price" => (int)$data['2'],
+                    "ab_price" => $data['2'],
                     "ab_description" => $data['3'],
                     "ab_creator_id" => $data['4'],
                     "ab_createDate" => $data['5'],

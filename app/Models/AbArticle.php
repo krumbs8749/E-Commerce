@@ -13,5 +13,14 @@ class AbArticle extends Model
 
     public $timestamps = false;
 
+    public function setAbPriceAttribute($value)
+    {
+        if(is_string($value)){
+            $value = str_replace(',', '.', str_replace('.', '', $value));
+            $this->attributes['ab_price'] = (double)$value;
+        }else{
+            $this->attributes['ab_price'] = (double) $value;
+        }
+    }
     protected $fillable = ['id','ab_name','ab_price','ab_description','ab_creator_id','ab_createDate'];
 }
