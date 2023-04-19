@@ -23,7 +23,8 @@ Route::get('/login', [Controllers\AuthController::class, 'login'])->name('login'
 Route::get('/logout', [Controllers\AuthController::class, 'logout'])->name('logout');
 Route::get('/isloggedin', [Controllers\AuthController::class, 'isloggedin'])->name('haslogin');
 
-Route::get('/home',[Controllers\HomeController::class,'show']);
-Route::get('/articles', [Controllers\ArticlesController::class, 'aufgabe_10']);
 
-Route::get('/newarticle', [Controllers\ArticlesController::class,'M2_Aufgabe_9']);
+Route::get('/articles', [Controllers\ArticlesController::class, 'outputArticles'])->name('outputArticles');
+Route::post('/articles',[Controllers\ArticlesController::class, 'setArticles']);
+Route::get('/newarticle', [Controllers\ArticlesController::class, 'insertNewArticle']);
+

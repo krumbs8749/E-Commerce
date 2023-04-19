@@ -1,61 +1,66 @@
-"use strict";
-
-function validateForm() {
-    let form = document.getElementById("myForm")
-
-    if(form["name"].value === "") {
-        alert("Bitte Name eingeben!")
-        return false
-    }
-
-    if(form["price"].value <= 0) {
-        alert("ungültiger Preis")
-        return false
-    }
-
-    return true
+function addBreakline(node){
+    const br = document.createElement('br')
+    node.appendChild(br)
+    return node
 }
+function populateForm(form){
+    const formContents = ['name', 'price', 'description'];
+    // add csrf token
+    const csrf = document.createElement('input')
+    csrf.type = 'hidden'
+    csrf.name = '_token'
+    csrf.value = document.getElementById('script-newarticle').dataset.token
+    form.appendChild(csrf)
+    formContents.forEach(str => {
+        const label = document.createElement('label')
+        label.htmlFor = `art_${str}`
+        label.innerText = str
+        const input = document.createElement('input')
+        input.required = true
+        input.type = str === 'price'? 'number' : 'text'
+        if(str === 'price'){
+            input.min = 0
+        }
+        input.id = `art_${str}`
+        input.name = `art_${str}`
+        form.appendChild(label)
+        form = addBreakline(form)
+        form.appendChild(input)
+        form = addBreakline(form)
 
-let body = document.querySelector("body")
-let form = document.createElement("form")
-let br1 = document.createElement("br")
-let br2 = document.createElement("br")
-let br3 = document.createElement("br")
+    })
 
-form.setAttribute("method","post")
-form.setAttribute("action", "/articles")
-form.setAttribute("id","myForm")
-form.setAttribute("onsubmit","return validateForm()")
+    const button = document.createElement('button')
+    button.type = 'submit'
+    button.innerText = 'Speichern'
+    form.appendChild(button)
 
-let input_name = document.createElement("input")
-input_name.setAttribute("type","text")
-input_name.setAttribute("name", "name")
-input_name.setAttribute("placeholder", "Name")
-input_name.required = true
+    return form
+}
+function createForm() {
+    // Title
+    const h1 = document.createElement('h1')
+    h1.innerText = 'Neue Artikel Speichern'
+    document.body.appendChild(h1)
+    // Create Form
+    let form = document.createElement('form')
+    form = populateForm(form)
+    form.method = 'POST'
+    form.action = '/articles'
+    // Set submit event listener
+    form.onsubmit = (event) => {
+        const formValues = event.target.elements
+        if(formValues['art_price'].value <= 0){
+            event.preventDefault()
+            alert('Price muss mehr als 0 sein')
+            console.log({name: formValues['art_name'].value, price: formValues['art_price'].value, desc: formValues['art_description'].value})
+        }
 
-let input_price = document.createElement("input")
-input_price.setAttribute("type","text")
-input_price.setAttribute("number", "price")
-input_price.setAttribute("placeholder", "Price")
-input_price.required = true
+    }
+    document.body.appendChild(form)
 
-let input_description = document.createElement("textarea")
-input_description.setAttribute("name", "description")
-input_description.setAttribute("placeholder", "Description")
-input_description.required = true
-
-let submit = document.createElement("button")
-submit.innerText = "Speichern"
-submit.setAttribute("type", "button")
-submit.setAttribute("onclick", "document.getElementById('myForm').submit()")
-
-form.appendChild(input_name)
-form.appendChild(br1)
-form.appendChild(input_price)
-form.appendChild(br2)
-form.appendChild(input_description)
-form.appendChild(br3)
-form.appendChild(submit)
-
-body.appendChild(form)
+}
+document.body.onload = () => {
+    createForm()
+}
 
