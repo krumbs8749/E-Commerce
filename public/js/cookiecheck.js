@@ -56,9 +56,7 @@ function createCookieConsent() {
     document.body.appendChild(cookieContainer)
 }
 
-document.body.onload  = () => {
-    if(document.cookie.split('; ').find(c => c.startsWith('einverstanden=')) === undefined){
-        createCookieConsent()
-    }
-}
 
+if(document.cookie.split(';').find(c => c.startsWith('einverstanden=')) === undefined){
+    createCookieConsent()
+}

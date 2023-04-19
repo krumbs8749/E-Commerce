@@ -36,7 +36,5 @@ function setAddArticleListener() {
         }
     }
 }
+setAddArticleListener()
 
-document.body.onload = () => {
-    setAddArticleListener()
-}
