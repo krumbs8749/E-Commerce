@@ -4,9 +4,11 @@
 /public/hot
 /praktikum_dateien
 /public/storage
+/config/database.php
 /storage/*.key
 /vendor
 .env
+.env.example
 .env.backup
 .env.production
 .phpunit.result.cache

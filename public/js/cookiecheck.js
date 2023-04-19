@@ -1,6 +1,3 @@
-
-
-
 function createCookieConsent() {
     // Div container für cookie abrage
     const cookieContainer = document.createElement('div')

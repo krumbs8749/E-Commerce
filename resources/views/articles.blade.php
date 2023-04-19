@@ -74,7 +74,6 @@
         <div class="cart">
             <h3>Warenkorb</h3>
             <ul id="wishlist">
-
             </ul>
         </div>
     </div>
