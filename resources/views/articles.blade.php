@@ -11,7 +11,6 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 
         <!-- Styles -->
-        <
     </head>
     <body class="antialiased">
 
@@ -37,5 +36,6 @@
         @endforeach
         </tbody>
     </table>
+    <script src="/JavaScript/Navigation.js"></script>
     </body>
 </html>

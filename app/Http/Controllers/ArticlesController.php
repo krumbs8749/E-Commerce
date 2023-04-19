@@ -15,10 +15,11 @@ class ArticlesController
         }else{
             $articles = AbArticle::where("ab_name","ILIKE", '%'. $rd['search'].'%')->get();
         }
-
-
-
         return view('articles', ['articles' => $articles]);
+    }
+
+    public function M2_Aufgabe_9(){
+        return view('newarticle');
     }
 
 }
