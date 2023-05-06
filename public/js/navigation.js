@@ -10,7 +10,44 @@ const menuItems = [
     ["Unternehmen", ["Philosophie", "Karriere"]],
 ];
 
-menuItems.forEach((item) => {
+const Home = {
+    name: "Home",
+    children: [],
+};
+const Kategorien = {
+    name: "Kategorien",
+    children: categories,
+};
+const Verkaufen = {
+    name: "Verkaufen",
+    children: [],
+};
+const Unternehmen = {
+    name: "Unternehmen",
+    children: ["Philosophie", "Karriere"],
+};
+
+const navigation = {
+    content: [
+        Object.create(Home),
+        Object.create(Kategorien),
+        Object.create(Verkaufen),
+        Object.create(Unternehmen),
+    ],
+    displayContent: function () {
+        const children = {};
+        this.content.forEach((nav_item) => {
+            children[nav_item.name] = {
+                name: nav_item.name,
+                children: nav_item.child,
+            };
+        });
+        return children;
+    },
+};
+console.log(navigation.displayContent());
+
+navigation.content.forEach((item) => {
     const li = document.createElement("li");
     li.style.display = "block";
     li.style.textAlign = "center";
@@ -21,61 +58,38 @@ menuItems.forEach((item) => {
 
     li.addEventListener("mouseenter", () => {
         li.style.backgroundColor = "#111111";
-        if (typeof item !== "string" || item === "Kategorien") {
+
+        if (item.children.length > 0) {
             const ul = li.getElementsByTagName("ul");
             ul[0].style.display = "block";
         }
     });
     li.addEventListener("mouseleave", () => {
         li.style.backgroundColor = "#333333";
-        if (typeof item !== "string" || item === "Kategorien") {
+        if (item.children.length > 0) {
             const ul = li.getElementsByTagName("ul");
             ul[0].style.display = "none";
         }
     });
-    if (typeof item === "string") {
-        li.insertAdjacentHTML("afterbegin", item);
-    } else {
-        li.insertAdjacentHTML("afterbegin", item[0]);
-        const ul = document.createElement("ul");
-        ul.style.display = "none";
-        ul.style.position = "absolute";
-        ul.style.top = "45px";
-        ul.style.padding = "5px";
-        ul.style.width = "93px";
-        ul.style.backgroundColor = "#333333";
-        item[1].forEach((d) => {
-            const li = document.createElement("li");
-            li.insertAdjacentHTML("afterbegin", d);
-            li.style.display = "block";
-            li.style.textAlign = "left";
-            li.style.padding = "5px";
-            li.style.textDecoration = "none";
-            li.style.color = "white";
-            li.style.cursor = "pointer";
-            ul.appendChild(li);
-        });
-        li.appendChild(ul);
-    }
-    if (item === "Kategorien") {
-        const ul = document.createElement("ul");
-        ul.style.display = "none";
-        ul.style.position = "absolute";
-        ul.style.padding = "10px";
-        ul.style.top = "45px";
-        ul.style.overflowY = "hidden";
-        ul.style.overflowX = "hidden";
-        ul.style.backgroundColor = "#333333";
-        categories.forEach((d) => {
-            const li = document.createElement("li");
-            li.insertAdjacentHTML("afterbegin", d);
-            li.style.display = "block";
-            li.style.textAlign = "left";
-            li.style.padding = "5px";
-            li.style.textDecoration = "none";
-            li.style.color = "white";
-            li.style.cursor = "pointer";
-            ul.appendChild(li);
+    li.insertAdjacentHTML("afterbegin", item.name);
+    const ul = document.createElement("ul");
+    ul.style.display = "none";
+    ul.style.position = "absolute";
+    ul.style.top = "45px";
+    ul.style.padding = "5px";
+    ul.style.width = "250px";
+    ul.style.backgroundColor = "#333333";
+    if (item.children !== undefined && item.children.length > 0) {
+        item.children.forEach((d) => {
+            const child = document.createElement("li");
+            child.insertAdjacentHTML("afterbegin", d);
+            child.style.display = "block";
+            child.style.textAlign = "left";
+            child.style.padding = "5px";
+            child.style.textDecoration = "none";
+            child.style.color = "white";
+            child.style.cursor = "pointer";
+            ul.appendChild(child);
         });
         li.appendChild(ul);
     }
