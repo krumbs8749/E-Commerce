@@ -50,4 +50,14 @@ class ArticlesController
     public function insertNewArticle(Request $rd){
         return view ('newArticle',[] );
     }
+    public  function APIGetArticle(Request $rd){
+        if(!isset($rd['search'])){
+            $articles = Models\AbArticle::all();
+
+        }else{
+            $articles = Models\AbArticle::where("ab_name","ILIKE", '%'. $rd['search'].'%')->get();
+        }
+
+        return  json_encode($articles);
+    }
 }
