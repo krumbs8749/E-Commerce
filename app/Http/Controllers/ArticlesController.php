@@ -23,24 +23,28 @@ class ArticlesController
         return view('articles', ['articles' => $articles, 'articles_categories' => $articlesCategory]);
     }
     public function setArticles(Request $rd){
-        if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != 'xmlhttprequest')
-        {
-            return 'Fehler';
-        }
-         $postData = $rd->post();
-         Models\AbArticle::create([
-             "ab_name" => $postData['art_name'],
-             "ab_price" => $postData['art_price'],
-             "ab_description" => $postData['art_description'],
-             "ab_creator_id" => 1,
-             "ab_createDate" => date_format(new \DateTime(), 'Y-m-d H:i:s'),
-         ]);
+        $postData = $rd->post();
 
-        if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest')
-        {
-            return 'Erfolgreich';
+        if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) !== 'xmlhttprequest') {
+            return "Fehler";
         }
-        return 'Erfolgreich';
+
+        if($postData['art_price'] < 0 || $postData['art_name'] === ""){
+             echo "Fehlerhafte Eingabe";
+             exit();
+        }
+
+         $new_article = new Models\AbArticle;
+
+         $new_article->ab_name = $postData['art_name'];
+         $new_article->ab_price = $postData['art_price'];
+         $new_article->ab_description = $postData['art_description'];
+         $new_article->ab_creator_id = 1;
+         $new_article->ab_createDate = date_format(new \DateTime(), 'Y-m-d H:i:s');
+         $new_article->save();
+
+         return "Erfolgreich";
+        // return view
         //return redirect()->route('outputArticles');
     }
     public function insertNewArticle(Request $rd){
