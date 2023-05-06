@@ -89,6 +89,12 @@ navigation.content.forEach((item) => {
             child.style.textDecoration = "none";
             child.style.color = "white";
             child.style.cursor = "pointer";
+            child.onmouseenter = () => {
+                child.style.backgroundColor = "#111111";
+            }
+            child.onmouseleave = () => {
+                child.style.backgroundColor = "#333333";
+            }
             ul.appendChild(child);
         });
         li.appendChild(ul);
