@@ -18,6 +18,7 @@
                 justify-content: center;
                 align-items: flex-start;
                 flex-direction: column;
+                overflow-x: hidden;
             }
             img {
                 height: 50px;
@@ -27,12 +28,22 @@
             }
             .main{
                 display: grid;
-                width: 100vw;
+                width: 100%;
                 grid-template-columns: 70% 30%;
             }
             .cart{
                 background: #1a202c;
                 color: white;
+            }
+            .cart > h3 {
+                text-align: center;
+            }
+            #wishlist {
+                padding: 0 20px 0 20px;
+            }
+            #wishlist > li{
+                display: flex;
+                justify-content: space-between;
             }
         </style>
     </head>
@@ -60,9 +71,9 @@
                     <td>{{$d['ab_price']}}</td>
                     <td>{{$d['ab_description']}}</td>
                     @if(File::exists(public_path("/articelimages/$d->id.jpg")))
-                        <td><img src={{"/articelimages/$d->id.jpg"}}></td>
+                        <td><img alt="article image" src={{"/articelimages/$d->id.jpg"}}></td>
                     @elseif(File::exists(public_path("articelimages/$d->id.png")))
-                        <td><img src={{"/articelimages/$d->id.png"}}></td>
+                        <td><img alt="article image" src={{"/articelimages/$d->id.png"}}></td>
                     @else
                         <td>No Image</td>
                     @endif

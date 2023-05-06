@@ -23,6 +23,10 @@ class ArticlesController
         return view('articles', ['articles' => $articles, 'articles_categories' => $articlesCategory]);
     }
     public function setArticles(Request $rd){
+        if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != 'xmlhttprequest')
+        {
+            return 'Fehler';
+        }
          $postData = $rd->post();
          Models\AbArticle::create([
              "ab_name" => $postData['art_name'],
@@ -31,8 +35,13 @@ class ArticlesController
              "ab_creator_id" => 1,
              "ab_createDate" => date_format(new \DateTime(), 'Y-m-d H:i:s'),
          ]);
-        // return view
-        return redirect()->route('outputArticles');
+
+        if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest')
+        {
+            return 'Erfolgreich';
+        }
+        return 'Erfolgreich';
+        //return redirect()->route('outputArticles');
     }
     public function insertNewArticle(Request $rd){
         return view ('newArticle',[] );
