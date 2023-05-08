@@ -28,7 +28,4 @@ Route::get('/articles', [Controllers\ArticlesController::class, 'outputArticles'
 Route::post('/articles',[Controllers\ArticlesController::class, 'setArticles']);
 Route::get('/newarticle', [Controllers\ArticlesController::class, 'insertNewArticle']);
 
-Route::get('/api/articles', [Controllers\ArticlesAPIController::class, 'APIGetArticle']);
-Route::post('/api/articles', [Controllers\ArticlesAPIController::class, 'APIPostArticle']);
-
 
