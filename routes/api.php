@@ -22,3 +22,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/articles', [Controllers\ArticlesAPIController::class, 'APIGetArticle']);
 Route::post('/articles', [Controllers\ArticlesAPIController::class, 'APIPostArticle']);
+
+Route::post('/shoppingcart', [Controllers\ShoppingCartAPIController::class, 'APIAddShoppingCartItem']);
+Route::delete('/shoppingcart/{shoppingcartId}/articles/{articleId}', [Controllers\ShoppingCartAPIController::class, 'APIDeleteShoppingCartItem']);
