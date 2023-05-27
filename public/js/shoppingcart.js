@@ -35,29 +35,30 @@ function removeFromCart(event) {
 
 }
 
+function insertIntoCart(event) {
+    const art_id = event.target.id.split('article_')[1];
+    const art_name = event.target.value;
+    if(!cartContents.includes(art_name)) {
+        // Insert into Wishlist
+        const li = document.createElement('li');
+        li.innerHTML = art_name;
+        const button = document.createElement('button');
+        button.innerHTML = '-';
+        button.id = `article_${art_id}`
+        button.value = art_name;
+        button.onclick = removeFromCart;
+        li.appendChild(button);
+        carts.appendChild(li);
+        cartContents.push(art_name);
+        // Insert into Database
+        insertArticleIntoDatabase(art_id);
+    }
+}
 function setAddArticleListener() {
     const addButtons = document.getElementsByClassName('article_add');
-
+    console.log('ran')
     for(const button of addButtons){
-        button.onclick = event => {
-            const art_id = event.target.id.split('article_')[1];
-            const art_name = event.target.value;
-            if(!cartContents.includes(art_name)){
-                // Insert into Wishlist
-                const li = document.createElement('li');
-                li.innerHTML = art_name;
-                const button = document.createElement('button');
-                button.innerHTML = '-';
-                button.id = `article_${art_id}`
-                button.value = art_name;
-                button.onclick = removeFromCart;
-                li.appendChild(button);
-                carts.appendChild(li);
-                cartContents.push(art_name);
-                // Insert into Database
-                insertArticleIntoDatabase(art_id);
-            }
-        }
+        button.onclick = insertIntoCart;
     }
 }
 
