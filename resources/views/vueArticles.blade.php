@@ -71,11 +71,11 @@
         .main{
             display: grid;
             width: 100%;
+            min-height: 80vh;
             grid-template-columns: 70% 30%;
         }
         .cart{
             background: #1a202c;
-            height: 100vh;
             color: white;
         }
         .cart > h3 {
@@ -98,12 +98,23 @@
         table{
             text-align: center;
         }
+        footer {
+            background-color: #111111;
+            color: #FFFFFF;
+            padding: 10px;
+            text-align: center;
+        }
+        footer a {
+            padding: 0 5px 0 5px;
+            color: ghostwhite;
+        }
     </style>
 </head>
 <body>
     <div id="app">
         <siteheader categories="{{$articles_categories}}"></siteheader>
         <sitebody articles="{{$articles}}"></sitebody>
+        <sitefooter></sitefooter>
     </div>
     <script src="{{asset('js/shoppingcart.js')}}"></script>
     <script src="{{asset('js/cookiecheck.js')}}"></script>
@@ -111,14 +122,15 @@
 <script type="module">
     import Siteheader from "./vue_components/siteheader.js";
     import Sitebody from './vue_components/sitebody.js';
+    import Sitefooter from './vue_components/sitefooter.js';
 
     Vue.createApp({
       components:{
           Siteheader,
-          Sitebody
+          Sitebody,
+          Sitefooter
       }
     }).mount('#app')
 
 </script>
-
 </html>
