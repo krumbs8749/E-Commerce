@@ -46,15 +46,25 @@ export default{
                     <td>picture</td>
                 </tr>
                 </thead>
-                <tbody>
-                    <tr v-for="item in items">
-                        <td>{{ item.id }}</td>
-                        <td>{{ item.ab_name }}</td>
-                        <td>{{ item.ab_price }}</td>
-                        <td>{{ item.ab_description }}</td>
-                        <td><button v-bind:id="'article_'+ item.id" class="article_add"
-                                    v-bind:value="item.ab_name" @click="addCart">+</button></td>
-                    </tr>
+                <tbody v-if="searchResult === null">
+                <tr v-for="item in items">
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.ab_name }}</td>
+                    <td>{{ item.ab_price }}</td>
+                    <td>{{ item.ab_description }}</td>
+                    <td><button v-bind:id="'article_'+ item.id" class="article_add"
+                                v-bind:value="item.ab_name" @click="addCart">+</button></td>
+                </tr>
+                </tbody>
+                <tbody v-else="">
+                <tr v-for="result in searchResult">
+                    <td>{{ result.id }}</td>
+                    <td>{{ result.ab_name }}</td>
+                    <td>{{ result.ab_price }}</td>
+                    <td>{{ result.ab_description }}</td>
+                    <td><button v-bind:id="'article_'+ result.id" class="article_add"
+                                v-bind:value="result.ab_name" @click="addCart">+</button></td>
+                </tr>
                 </tbody>
             </table>
         </div>
