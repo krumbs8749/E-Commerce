@@ -84,10 +84,10 @@
                         <td>{{$d['ab_name']}}</td>
                         <td>{{$d['ab_price']}}</td>
                         <td>{{$d['ab_description']}}</td>
-                        @if(File::exists(public_path("/articelimages/$d->id.jpg")))
-                            <td><img alt="article image" src={{"/articelimages/$d->id.jpg"}}></td>
-                        @elseif(File::exists(public_path("articelimages/$d->id.png")))
-                            <td><img alt="article image" src={{"/articelimages/$d->id.png"}}></td>
+                        @if(File::exists(public_path("/articleimages/$d->id.jpg")))
+                            <td><img alt="article image" src={{"/articleimages/$d->id.jpg"}}></td>
+                        @elseif(File::exists(public_path("articleimages/$d->id.png")))
+                            <td><img alt="article image" src={{"/articleimages/$d->id.png"}}></td>
                         @else
                             <td>No Image</td>
                         @endif
@@ -101,6 +101,7 @@
                         <td>@{{  result.ab_name }}</td>
                         <td>@{{  result.ab_price }}</td>
                         <td>@{{  result.ab_description }}</td>
+                        <td><img alt="No Image" v-bind:src="'/articleimages/' + result.id + '.jpg'"  @@error="imageUrlAlt"></td>
                         <td><button v-bind:id="'article_'+ result.id" class="article_add"
                                     v-bind:value="result.ab_name" @click="addCart">+</button></td>
                     </tr>
@@ -147,6 +148,9 @@
             },
             addCart : function (event){
                 addToCart(event)
+            },
+            imageUrlAlt(event) {
+                event.target.src = event.target.src.replace(".jpg", ".png")
             }
         }
     }).mount('#app')

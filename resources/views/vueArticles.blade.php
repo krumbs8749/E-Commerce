@@ -96,6 +96,7 @@
             border-radius: 5px;
         }
         table{
+            width: 100%;
             text-align: center;
         }
         footer {
@@ -107,6 +108,10 @@
         footer a {
             padding: 0 5px 0 5px;
             color: ghostwhite;
+        }
+        footer a:hover{
+            color: darkturquoise;
+            cursor: pointer;
         }
     </style>
 </head>
