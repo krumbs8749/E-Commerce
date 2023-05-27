@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>VUE array</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+<div class="container" id="app">
+    <table>
+        <thead>
+        <th>Name</th>
+        <th>Price</th>
+        </thead>
+        <tbody>
+        <tr v-for="data in appData">
+            <td>{{data.name}}</td>
+            <td>{{data.price}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <button @click="appData.push({name: 'Radio-UKW', price: 45})">ADD ITEM</button>
+</div>
+
+<script>
+    let appData = [
+        {name: "Reifen", price: 8290},
+        {name: "Antenne drehbar. Leicht geknickt", price: 1400},
+        {name: "Opel Kadett C 1992 – wie neu", price: 150000},
+    ]
+    Vue.createApp({
+        data() {
+            return {'appData' : appData};
+        }
+
+    }).mount('#app');
+</script>
+</body>
+</html>

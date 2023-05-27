@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VUE HTML</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+<div id="app">
+    <h2 v-html="text"></h2>
+</div>
+</body>
+<script>
+    Vue.createApp({
+        data() {
+            return {'text' : "\"<b>Vielen\n" +
+                    "Dank</b>, für Ihren Einkauf bei <i>Abalo</i>\""}
+        }
+    }).mount('#app');
+</script>
+</html>

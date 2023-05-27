@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>VUE if</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+<div class="container" id="app">
+    <h1 v-if="serverdown">Der Webserver ist zurzeit nicht erreichbar</h1>
+    <h1 v-else="">Fuktioniert</h1>
+</div>
+<script>
+    let serverdown = true;
+
+    Vue.createApp({
+        data() {
+            return {'serverdown' : serverdown};
+        }
+    }).mount('#app');
+</script>
+</body>
+</html>

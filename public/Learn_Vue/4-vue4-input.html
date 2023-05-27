@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VUE Input</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+<div id="app">
+    <h2>{{text}}</h2>
+    <input type="text" v-model="text">
+</div>
+</body>
+<script>
+    Vue.createApp({
+        data() {
+            return {'text' : null};
+        }
+    }).mount('#app');
+</script>
+</html>
