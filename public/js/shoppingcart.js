@@ -1,4 +1,3 @@
-var carts = document.getElementById('wishlist');
 var cartContents = [];
 var shoppingCartId = null;
 // API
@@ -19,6 +18,7 @@ function deleteArticleFromDatabse(id){
     xhr.send();
 }
 function removeFromCart(event) {
+    let carts = document.getElementById('wishlist');
     // Remove article from the wishlist
     const art_id = event.target.id.split('article_')[1];
     const art_name = event.target.value;
@@ -35,32 +35,36 @@ function removeFromCart(event) {
 
 }
 
+function addToCart(event){
+    let carts = document.getElementById('wishlist');
+    const art_id = event.target.id.split('article_')[1];
+    const art_name = event.target.value;
+
+    if(!cartContents.includes(art_name)) {
+        // Insert into Wishlist
+        const li = document.createElement('li');
+        li.innerHTML = art_name;
+        const button = document.createElement('button');
+        button.innerHTML = '-';
+        button.id = `article_${art_id}`
+        button.value = art_name;
+        button.onclick = removeFromCart;
+        li.appendChild(button);
+        carts.appendChild(li);
+        cartContents.push(art_name);
+        // Insert into Database
+        insertArticleIntoDatabase(art_id);
+    }
+}
+
 function setAddArticleListener() {
     const addButtons = document.getElementsByClassName('article_add');
 
     for(const button of addButtons){
-        button.onclick = event => {
-            const art_id = event.target.id.split('article_')[1];
-            const art_name = event.target.value;
-            if(!cartContents.includes(art_name)){
-                // Insert into Wishlist
-                const li = document.createElement('li');
-                li.innerHTML = art_name;
-                const button = document.createElement('button');
-                button.innerHTML = '-';
-                button.id = `article_${art_id}`
-                button.value = art_name;
-                button.onclick = removeFromCart;
-                li.appendChild(button);
-                carts.appendChild(li);
-                cartContents.push(art_name);
-                // Insert into Database
-                insertArticleIntoDatabase(art_id);
-            }
-        }
+       button.onclick = addToCart
     }
 }
 
-
 setAddArticleListener()
+
 

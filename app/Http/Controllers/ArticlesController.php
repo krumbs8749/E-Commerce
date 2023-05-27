@@ -50,5 +50,19 @@ class ArticlesController
     public function insertNewArticle(Request $rd){
         return view ('newArticle',[] );
     }
+
+    public function vueArticles(Request $rd) {
+        if(!isset($rd['search'])){
+            $articles = Models\AbArticle::all();
+
+        }else{
+            $articles = Models\AbArticle::where("ab_name","ILIKE", '%'. $rd['search'].'%')->get();
+        }
+        $articlesCategory = Models\AbArticlecategory::pluck('ab_name');
+
+
+
+        return view('vueArticles', ['articles' => $articles, 'articles_categories' => $articlesCategory]);
+    }
 }
 

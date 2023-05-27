@@ -24,6 +24,7 @@ Route::get('/logout', [Controllers\AuthController::class, 'logout'])->name('logo
 Route::get('/isloggedin', [Controllers\AuthController::class, 'isloggedin'])->name('haslogin');
 
 
+Route::get('/newsite',[Controllers\ArticlesController::class, 'vueArticles']);
 Route::get('/articles', [Controllers\ArticlesController::class, 'outputArticles'])->name('outputArticles');
 Route::post('/articles',[Controllers\ArticlesController::class, 'setArticles']);
 Route::get('/newarticle', [Controllers\ArticlesController::class, 'insertNewArticle']);
