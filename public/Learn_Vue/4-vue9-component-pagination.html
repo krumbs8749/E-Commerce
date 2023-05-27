@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VUE component</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+<div id="app">
+    <pagination></pagination>
+</div>
+</body>
+<script type="module">
+    import Pagination from './page.js'
+
+    Vue.createApp({
+        components:{
+            Pagination
+        }
+    }).mount("#app")
+</script>
+</html>

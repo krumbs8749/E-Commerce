@@ -1,16 +1,11 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Articles</title>
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <script src="https://unpkg.com/vue@next"></script>
+    <title>Vue Article</title>
 
     <!-- Styles -->
     <style>
@@ -80,8 +75,8 @@
         }
         .cart{
             background: #1a202c;
-            color: white;
             height: 100vh;
+            color: white;
         }
         .cart > h3 {
             text-align: center;
@@ -93,19 +88,37 @@
             display: flex;
             justify-content: space-between;
         }
+        #search{
+            width: 96%;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+        table{
+            text-align: center;
+        }
     </style>
 </head>
-<body class="antialiased">
-<div id="app">
-    <siteheader categories="{{$articles_categories}}"></siteheader>
-</div>
+<body>
+    <div id="app">
+        <siteheader categories="{{$articles_categories}}"></siteheader>
+        <sitebody articles="{{$articles}}"></sitebody>
+    </div>
+    <script src="{{asset('js/shoppingcart.js')}}"></script>
+    <script src="{{asset('js/cookiecheck.js')}}"></script>
+</body>
 <script type="module">
     import Siteheader from "./vue_components/siteheader.js";
+    import Sitebody from './vue_components/sitebody.js';
+
     Vue.createApp({
-        components: {
-            Siteheader
-        }
-    }).mount('#app');
+      components:{
+          Siteheader,
+          Sitebody
+      }
+    }).mount('#app')
+
 </script>
-</body>
+
 </html>

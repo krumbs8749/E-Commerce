@@ -1,4 +1,3 @@
-var carts = document.getElementById('wishlist');
 var cartContents = [];
 var shoppingCartId = null;
 // API
@@ -19,6 +18,7 @@ function deleteArticleFromDatabse(id){
     xhr.send();
 }
 function removeFromCart(event) {
+    let carts = document.getElementById('wishlist');
     // Remove article from the wishlist
     const art_id = event.target.id.split('article_')[1];
     const art_name = event.target.value;
@@ -35,9 +35,11 @@ function removeFromCart(event) {
 
 }
 
-function insertIntoCart(event) {
+function addToCart(event){
+    let carts = document.getElementById('wishlist');
     const art_id = event.target.id.split('article_')[1];
     const art_name = event.target.value;
+
     if(!cartContents.includes(art_name)) {
         // Insert into Wishlist
         const li = document.createElement('li');
@@ -54,14 +56,15 @@ function insertIntoCart(event) {
         insertArticleIntoDatabase(art_id);
     }
 }
+
 function setAddArticleListener() {
     const addButtons = document.getElementsByClassName('article_add');
-    console.log('ran')
+
     for(const button of addButtons){
-        button.onclick = insertIntoCart;
+       button.onclick = addToCart
     }
 }
 
-
 setAddArticleListener()
+
 

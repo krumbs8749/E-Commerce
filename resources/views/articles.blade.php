@@ -3,13 +3,13 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://unpkg.com/vue@next"></script>
 
         <title>Laravel</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-        <script src="https://unpkg.com/vue@next"></script>
 
         <!-- Styles -->
         <style>
@@ -47,6 +47,16 @@
                 display: flex;
                 justify-content: space-between;
             }
+            #search{
+                width: 96%;
+                margin: 10px;
+                padding: 10px;
+                border: 1px solid black;
+                border-radius: 5px;
+            }
+            table{
+                text-align: center;
+            }
         </style>
     </head>
     <body class="antialiased">
@@ -56,9 +66,8 @@
     </script>
     <div class="main" id="app">
         <div>
-            <label for="search-input">Search: </label>
-            <input type="text" id="search-input" name="search-input" v-model="searchInput">
-            <table v-if="searchResults===null" >
+            <input id="search" type="text" v-model="search" placeholder="Suchen">
+            <table>
                 <thead>
                 <tr>
                     <td>id</td>
@@ -68,7 +77,7 @@
                     <td>picture</td>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody v-if="searchResult === null">
                 @foreach ($articles as $d)
                     <tr>
                         <td>{{$d['id']}}</td>
@@ -86,71 +95,61 @@
                     </tr>
                 @endforeach
                 </tbody>
-            </table>
-            <table v-else>
-                <thead>
-                <tr>
-                    <td>id</td>
-                    <td>name</td>
-                    <td>price</td>
-                    <td>description</td>
-                    <td>picture</td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="data in searchResults">
-                    <td>@{{data['id']}}</td>
-                    <td>@{{data['ab_name']}}</td>
-                    <td>@{{data['ab_price']}}</td>
-                    <td>@{{data['ab_description']}}</td>
-                    <td><button v-bind:id="'article_'+ data.id" class="article_add" v-bind:value="data.ab_name" v-on:click="insertToCart">+</button></td>
-                </tr>
+                <tbody v-else="">
+                    <tr v-for="result in searchResult">
+                        <td>@{{  result.id }}</td>
+                        <td>@{{  result.ab_name }}</td>
+                        <td>@{{  result.ab_price }}</td>
+                        <td>@{{  result.ab_description }}</td>
+                        <td><button v-bind:id="'article_'+ result.id" class="article_add"
+                                    v-bind:value="result.ab_name" @click="addCart">+</button></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
+
         <div class="cart">
             <h3>Warenkorb</h3>
             <ul id="wishlist">
             </ul>
         </div>
     </div>
-
-    <script>
-        Vue.createApp({
-            data() {
-                return {
-                    searchInput: '',
-                    searchResults: null
-                }
-            },
-            watch: {
-                searchInput(newInput){
-                    if(newInput.length >= 3){
-                        this.getArticle(newInput);
-                    }else {
-                        this.$data.searchResults = null;
-                        setAddArticleListener();
-                    }
-                }
-            },
-            methods: {
-                getArticle: function (search) {
-                    const xhr = new XMLHttpRequest();
-                    xhr.open('GET', `/api/articles?search=${search}`);
-                    xhr.onreadystatechange = () => {
-                        if(xhr.readyState === 4 && xhr.status === 200){
-                            this.$data.searchResults = JSON.parse(xhr.responseText);
-                        }
-                    }
-                    xhr.send();
-                },
-                insertToCart: function (event){
-                    insertIntoCart(event);
-                }
+    </body>
+<script>
+    Vue.createApp({
+        data(){
+            return {
+                'searchResult' : null,
+                'search' : null,
 
             }
-        }).mount('#app');
-    </script>
-    <script src="{{asset('js/shoppingcart.js')}}"></script>
-    </body>
+        },
+        watch: {
+            search(currentInput){
+                if(currentInput.length >= 3)
+                    this.getSearched(currentInput)
+                else{
+                    this.searchResult = null
+                    setAddArticleListener()
+                }
+            }
+        },
+        methods: {
+            getSearched(currentInput){
+                const xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = () => {
+                    if(xhr.readyState === 4 && xhr.status === 200){
+                        this.$data.searchResult = JSON.parse(xhr.response)
+                    }
+                }
+                xhr.open('GET', '/api/articles?search=' + currentInput);
+                xhr.send();
+            },
+            addCart : function (event){
+                addToCart(event)
+            }
+        }
+    }).mount('#app')
+</script>
+<script src="{{asset('js/shoppingcart.js')}}"></script>
 </html>
