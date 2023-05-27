@@ -57,8 +57,6 @@ function setAddArticleListener() {
                 // Insert into Database
                 insertArticleIntoDatabase(art_id);
             }
-
-
         }
     }
 }

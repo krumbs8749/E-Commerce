@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>First Vue</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+<div id="app">
+    {{ msg.toLowerCase()}}<br>
+    {{ msg.toUpperCase()}}
+</div>
+<script>
+    let appData = {
+        msg : "Hello World"
+    }
+    Vue.createApp({
+        data() {
+            return appData;
+        }
+    }).mount('#app');
+</script>
+</body>
+</html>

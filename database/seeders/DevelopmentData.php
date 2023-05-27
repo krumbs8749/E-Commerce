@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use League\Csv\Reader;
+
 class DevelopmentData extends Seeder
 {
     /**
@@ -10,12 +13,25 @@ class DevelopmentData extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        $csv = Reader::createFromPath('database/data/article_has_articlecategory.csv', 'r');
+        $csv->setDelimiter(';');
+        $csv->setHeaderOffset(0);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $header = $csv->getHeader(); //returns the CSV header record
+        $records = $csv->getRecords(); //returns all the CSV records as an Iterator object
+
+        DB::table("ab_article_has_category")->truncate();
+
+        $article_category = $header[0];
+        $article_id = $header[1];
+
+        foreach ($records as $record){
+            DB::table("ab_article_has_category")
+                ->insert([
+                    $article_category => $record[$article_category],
+                    $article_id => $record[$article_id ]
+                ]);
+        }
     }
 
 }
