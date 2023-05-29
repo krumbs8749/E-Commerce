@@ -1,7 +1,7 @@
 
 import Pagination from "./pagination.js";
 export default{
-    props:['articles', 'type', 'articleslength'],
+    props:['articles', 'articleslength'],
     components: {
         Pagination
     },
