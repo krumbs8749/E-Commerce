@@ -4,12 +4,17 @@ export default {
         return {
             kontakt: "Kontakt",
             copyright: "Copyright",
-            impressum: "Impressum"
+            impressum: "impressum"
+        }
+    },
+    methods: {
+        setType: function () {
+            this.$emit('update-type', this.impressum);
         }
     },
     template: `
    <footer>
-        <p><a>{{kontakt}}</a>&nbsp|&nbsp<a>{{copyright}}</a>&nbsp|&nbsp<a href="/impressum">{{impressum}}</a></p>
+        <p><a>{{kontakt}}</a>&nbsp|&nbsp<a>{{copyright}}</a>&nbsp|&nbsp<a @click="setType">{{impressum}}</a></p>
     </footer>
     `
 }

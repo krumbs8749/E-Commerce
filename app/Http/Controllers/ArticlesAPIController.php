@@ -13,10 +13,19 @@ class ArticlesAPIController
             $articles = Models\AbArticle::all();
 
         }else{
-            $articles = Models\AbArticle::where("ab_name","ILIKE", '%'. $rd['search'].'%')->get();
+            if(isset($rd['limit']) && isset($rd['offset'])){
+                $articles_length = Models\AbArticle::where("ab_name","ILIKE", '%'. $rd['search'].'%')->count();
+                $articles = Models\AbArticle::where("ab_name","ILIKE", '%'. $rd['search'].'%')
+                                                ->limit($rd['limit'])
+                                                ->offset($rd['offset'])
+                                                ->get();
+            }else {
+                $articles = Models\AbArticle::where("ab_name","ILIKE", '%'. $rd['search'].'%')->get();
+            }
+
         }
 
-        return  json_encode($articles);
+        return  json_encode(['articles' => $articles, 'articles_length' => $articles_length]);
     }
 
     public function APIPostArticle(Request $rd){

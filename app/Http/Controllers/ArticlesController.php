@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models;
+use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -51,31 +52,18 @@ class ArticlesController
         return view ('newArticle',[] );
     }
 
-    public function vueArticles(Request $rd, int $currentMax = 0) {
-
-        $total = Models\AbArticle::count();
-        $last_set = false;
-
-        if ($currentMax + 5 >= $total) {
-            $currentMax = $total - 5;
-            $last_set = true;
-        }
-
+    public function vueArticles(Request $rd) {
         if(!isset($rd['search'])){
-            $articles = Models\AbArticle::skip($currentMax)->take(5)->get();
+            $articles = Models\AbArticle::all();
+
         }else{
-            $articles = Models\AbArticle::where("ab_name","ILIKE", '%'. $rd['search'].'% OFFSET '. $currentMax . 'LIMIT 5')->get();
+            $articles = Models\AbArticle::where("ab_name","ILIKE", '%'. $rd['search'].'%')->get();
         }
         $articlesCategory = Models\AbArticlecategory::pluck('ab_name');
+        $articles_length = count($articles);
 
-        $firs_item = ($currentMax === 0) ?? false;
 
-        return view('vueArticles', [
-            'articles' => $articles,
-            'articles_categories' => $articlesCategory,
-            'first_item' => $firs_item,
-            'last_set' => $last_set
-        ]);
+        return view('vueArticles', ['articles' => $articles, 'articles_categories' => $articlesCategory, 'articles_length' => $articles_length]);
     }
 
 
