@@ -1,17 +1,19 @@
 
 import Pagination from "./pagination.js";
+import Impressum from "./impressum.js";
 export default{
-    props:['articles', 'articleslength'],
+    props:['articles', 'articleslength', 'type'],
     components: {
-        Pagination
+        Pagination,
+        Impressum
     },
     data:function (){
         return{
             'search' : null,
             'searchResult' : null,
             'alLArticles': JSON.parse(this.articles),
-            'items': JSON.parse(this.articles).slice(0, 10),
-            'limit': 10,
+            'items': JSON.parse(this.articles).slice(0, 5),
+            'limit': 5,
             'offset': 0,
             'searchedArticlesTotalLength': 0,
             'art_length': parseInt(this.articleslength)
@@ -20,13 +22,11 @@ export default{
     watch: {
         search(currentInput){
             if(currentInput.length >= 3){
-                this.limit = 5;
                 this.offset = 0;
                 this.getSearched(currentInput);
             }
             else{
                 this.searchResult = null;
-                this.limit = 10;
                 this.offset = 0;
                 this.searchedArticlesTotalLength = 0;
                 setAddArticleListener();
@@ -66,7 +66,7 @@ export default{
         }
     },
     template: `
-        <div class="main">
+        <div class="main" v-if="type !== 'impressum' ">
             <div>
                 <input id="search" type="text" v-model="search" placeholder="Suchen">
                 <table>
@@ -120,6 +120,7 @@ export default{
                 </ul>
             </div>
         </div>
+        <impressum v-else></impressum>
         `
 
 }

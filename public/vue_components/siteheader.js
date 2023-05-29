@@ -25,14 +25,20 @@ const navigation = {
 };
 
 export default {
+    emits: ['update-type'],
     props: ['categories'],
     data() {
         return {menuItems: navigation.content}
     },
+    methods: {
+        setType: function () {
+            this.$emit('update-type', 'main');
+        }
+    },
     template: `
     <ul class="nav">
       <li class="nav-item" v-for="item in menuItems">
-        <a class="home" v-if="item.name === 'Home'" href="/newsite">{{item.name}}</a>
+        <span class="home" v-if="item.name === 'Home'" @click="setType">{{item.name}}</span>
           <span v-else="">{{item.name}}</span>
           <ul class="nav-item-list" v-if="item.children !== undefined && item.children.length > 0">
             <li class="nav-item-list-item" v-for="d in item.children">{{d}}</li>

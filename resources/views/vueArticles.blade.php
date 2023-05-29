@@ -130,9 +130,9 @@
 </head>
 <body>
     <div id="app">
-        <siteheader categories="{{$articles_categories}}"></siteheader>
-        <sitebody articles="{{$articles}}" articleslength="{{$articles_length}}"></sitebody>
-        <sitefooter @update-type="updateType"></sitefooter>
+        <siteheader @update-type="setType" categories="{{$articles_categories}}"></siteheader>
+        <sitebody :type="type" articles="{{$articles}}" articleslength="{{$articles_length}}"></sitebody>
+        <sitefooter @update-type="setType"></sitefooter>
     </div>
     <script src="{{asset('js/shoppingcart.js')}}"></script>
     <script src="{{asset('js/cookiecheck.js')}}"></script>
@@ -147,7 +147,17 @@
           Siteheader,
           Sitebody,
           Sitefooter
-      }
+      },
+        data: function (){
+          return {
+              type: null
+          }
+        },
+        methods: {
+          setType: function (val) {
+              this.$data.type = val;
+          }
+        }
     }).mount('#app')
 
 </script>
