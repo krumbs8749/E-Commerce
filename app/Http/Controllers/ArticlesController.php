@@ -51,18 +51,31 @@ class ArticlesController
         return view ('newArticle',[] );
     }
 
-    public function vueArticles(Request $rd) {
-        if(!isset($rd['search'])){
-            $articles = Models\AbArticle::all();
+    public function vueArticles(Request $rd, int $currentMax = 0) {
 
+        $total = Models\AbArticle::count();
+        $last_set = false;
+
+        if ($currentMax + 5 >= $total) {
+            $currentMax = $total - 5;
+            $last_set = true;
+        }
+
+        if(!isset($rd['search'])){
+            $articles = Models\AbArticle::skip($currentMax)->take(5)->get();
         }else{
-            $articles = Models\AbArticle::where("ab_name","ILIKE", '%'. $rd['search'].'%')->get();
+            $articles = Models\AbArticle::where("ab_name","ILIKE", '%'. $rd['search'].'% OFFSET '. $currentMax . 'LIMIT 5')->get();
         }
         $articlesCategory = Models\AbArticlecategory::pluck('ab_name');
 
+        $firs_item = ($currentMax === 0) ?? false;
 
-
-        return view('vueArticles', ['articles' => $articles, 'articles_categories' => $articlesCategory]);
+        return view('vueArticles', [
+            'articles' => $articles,
+            'articles_categories' => $articlesCategory,
+            'first_item' => $firs_item,
+            'last_set' => $last_set
+        ]);
     }
 
 

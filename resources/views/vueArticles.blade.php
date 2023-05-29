@@ -103,10 +103,13 @@
             padding: 0 5px 0 5px;
             border: 1px solid black;
         }
+        td{
+            height: 100px;
+        }
         footer {
             background-color: #111111;
             color: #FFFFFF;
-            padding: 10px;
+            padding: 5px;
             text-align: center;
         }
         footer a {
@@ -121,21 +124,42 @@
             color: white;
             text-decoration: none;
         }
+        #articles{
+            height: 100%;
+            position: relative;
+        }
+        #pages{
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+        }
+        #prev, #next{
+            color: black;
+            font-weight: bold;
+            padding: 0 15px 10px 15px;
+            display: block;
+        }
+        #next{
+            float: right;
+        }
+        #prev{
+            float: left;
+        }
     </style>
 </head>
 <body>
     <div id="app">
         <siteheader categories="{{$articles_categories}}"></siteheader>
-        <sitebody  articles="{{$articles}}"></sitebody>
-        <sitefooter @update-type="updateType"></sitefooter>
+        <sitebody  articles="{{$articles}}" first_item = "{{$first_item}}" last_set="{{$last_set}}"></sitebody>
+        <sitefooter></sitefooter>
     </div>
     <script src="{{asset('js/shoppingcart.js')}}"></script>
     <script src="{{asset('js/cookiecheck.js')}}"></script>
 </body>
 <script type="module">
-    import Siteheader from "./vue_components/siteheader.js";
-    import Sitebody from './vue_components/sitebody.js';
-    import Sitefooter from './vue_components/sitefooter.js';
+    import Siteheader from "../vue_components/siteheader.js";
+    import Sitebody from '../vue_components/sitebody.js';
+    import Sitefooter from '../vue_components/sitefooter.js';
 
     Vue.createApp({
         components:{

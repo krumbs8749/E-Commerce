@@ -32,7 +32,7 @@ export default {
     template: `
     <ul class="nav">
       <li class="nav-item" v-for="item in menuItems">
-        <a class="home" v-if="item.name === 'Home'" href="/newsite">{{item.name}}</a>
+        <a class="home" v-if="item.name === 'Home'" href="/newsite/0">{{item.name}}</a>
           <span v-else="">{{item.name}}</span>
           <ul class="nav-item-list" v-if="item.children !== undefined && item.children.length > 0">
             <li class="nav-item-list-item" v-for="d in item.children">{{d}}</li>

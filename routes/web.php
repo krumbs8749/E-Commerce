@@ -24,7 +24,7 @@ Route::get('/logout', [Controllers\AuthController::class, 'logout'])->name('logo
 Route::get('/isloggedin', [Controllers\AuthController::class, 'isloggedin'])->name('haslogin');
 
 
-Route::get('/newsite',[Controllers\ArticlesController::class, 'vueArticles']);
+Route::get('/newsite/{currentMax}',[Controllers\ArticlesController::class, 'vueArticles']);
 Route::get('/impressum',[Controllers\ArticlesController::class, 'impressum']);
 
 Route::get('/articles', [Controllers\ArticlesController::class, 'outputArticles'])->name('outputArticles');

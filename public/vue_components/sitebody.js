@@ -1,10 +1,12 @@
 export default{
-    props:['articles', 'type'],
+    props:['articles', 'first_item', 'last_set'],
     data:function (){
         return{
             'search' : null,
             'searchResult' : null,
             'items': JSON.parse(this.articles),
+            'firstItem': Boolean(this.first_item),
+            'lastSet': Boolean(this.last_set)
         }
     },
     watch: {
@@ -33,20 +35,27 @@ export default{
         },
         imageUrlAlt(event) {
             event.target.src = event.target.src.replace(".jpg", ".png")
+        },
+        getPrev(){
+           return this.items[0].id - 6
+        },
+        getNext(){
+            let last_index = this.items.length - 1
+            return this.items[last_index].id
         }
     },
     template: `
         <div class="main">
-        <div>
+        <div id="articles">
             <input id="search" type="text" v-model="search" placeholder="Suchen">
             <table>
                 <thead>
                 <tr>
-                    <td>ID</td>
-                    <td>Name</td>
-                    <td>Price</td>
-                    <td>Description</td>
-                    <td colspan="2">Picture</td>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Description</th>
+                    <th colspan="2">Picture</th>
                 </tr>
                 </thead>
                 <tbody v-if="searchResult === null">
@@ -79,6 +88,10 @@ export default{
                 </tr>
                 </tbody>
             </table>
+            <div id="pages">
+                <a id="prev" v-if = "!this.firstItem" v-bind:href="'/newsite/' + this.getPrev()" >&lt;&lt;&nbsp;Prev</a>
+                <a id="next" v-if="!this.lastSet" v-bind:href="'/newsite/'+ this.getNext()">Next&nbsp;&gt;&gt;</a>
+            </div>
         </div>
 
         <div class="cart">
@@ -86,7 +99,6 @@ export default{
             <ul id="wishlist">
             </ul>
         </div>
-        </div>
-        `
+    </div>`
 
 }
