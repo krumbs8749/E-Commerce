@@ -57,6 +57,10 @@
             table{
                 text-align: center;
             }
+            a{
+                color:white;
+                text-decoration: none;
+            }
         </style>
     </head>
     <body class="antialiased">

@@ -1,4 +1,5 @@
 export default {
+    emits: ['update-type'],
     data: function(){
         return {
             kontakt: "Kontakt",
@@ -8,7 +9,7 @@ export default {
     },
     template: `
    <footer>
-        <p><a>{{kontakt}}</a>&nbsp|&nbsp<a>{{copyright}}</a>&nbsp|&nbsp<a>{{impressum}}</a></p>
+        <p><a>{{kontakt}}</a>&nbsp|&nbsp<a>{{copyright}}</a>&nbsp|&nbsp<a href="/impressum">{{impressum}}</a></p>
     </footer>
     `
 }

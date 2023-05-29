@@ -65,5 +65,13 @@ class ArticlesController
 
         return view('vueArticles', ['articles' => $articles, 'articles_categories' => $articlesCategory, 'articles_length' => $articles_length]);
     }
+
+
+    public function impressum(Request $rd) {
+        $articlesCategory = Models\AbArticlecategory::pluck('ab_name');
+
+        return view('impressum', ['articles_categories' => $articlesCategory]);
+    }
+
 }
 
