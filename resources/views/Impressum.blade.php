@@ -71,7 +71,7 @@
         .main{
             display: grid;
             width: 100%;
-            min-height: 85vh;
+            min-height: 100vh;
             grid-template-columns: 70% 30%;
         }
         .cart{
@@ -99,10 +99,6 @@
             width: 100%;
             text-align: center;
         }
-        th,td{
-            padding: 0 5px 0 5px;
-            border: 1px solid black;
-        }
         footer {
             background-color: #111111;
             color: #FFFFFF;
@@ -118,32 +114,32 @@
             cursor: pointer;
         }
         a{
-            color: white;
+            color:white;
             text-decoration: none;
         }
     </style>
 </head>
 <body>
-    <div id="app">
-        <siteheader categories="{{$articles_categories}}"></siteheader>
-        <sitebody  articles="{{$articles}}"></sitebody>
-        <sitefooter @update-type="updateType"></sitefooter>
-    </div>
-    <script src="{{asset('js/shoppingcart.js')}}"></script>
-    <script src="{{asset('js/cookiecheck.js')}}"></script>
+<div id="app">
+    <siteheader categories="{{$articles_categories}}"></siteheader>
+    <impressum></impressum>
+    <sitefooter @update-type="updateType"></sitefooter>
+</div>
+<script src="{{asset('js/shoppingcart.js')}}"></script>
 </body>
 <script type="module">
     import Siteheader from "./vue_components/siteheader.js";
-    import Sitebody from './vue_components/sitebody.js';
+    import Impressum from "./vue_components/impressum.js"
     import Sitefooter from './vue_components/sitefooter.js';
 
     Vue.createApp({
         components:{
             Siteheader,
-            Sitebody,
-            Sitefooter,
-        }
+            Impressum,
+            Sitefooter
+        },
     }).mount('#app')
 
 </script>
 </html>
+

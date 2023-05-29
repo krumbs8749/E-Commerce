@@ -1,10 +1,10 @@
 export default{
-    props:['articles'],
+    props:['articles', 'type'],
     data:function (){
         return{
             'search' : null,
             'searchResult' : null,
-            'items': JSON.parse(this.articles)
+            'items': JSON.parse(this.articles),
         }
     },
     watch: {
@@ -42,22 +42,25 @@ export default{
             <table>
                 <thead>
                 <tr>
-                    <td>id</td>
-                    <td>name</td>
-                    <td>price</td>
-                    <td>description</td>
-                    <td>picture</td>
+                    <td>ID</td>
+                    <td>Name</td>
+                    <td>Price</td>
+                    <td>Description</td>
+                    <td colspan="2">Picture</td>
                 </tr>
                 </thead>
                 <tbody v-if="searchResult === null">
                 <tr v-for="item in items">
                     <td>{{ item.id }}</td>
                     <td>{{ item.ab_name }}</td>
-                    <td>{{ item.ab_price }}</td>
+                    <td>&euro;{{ item.ab_price }}</td>
                     <td>{{ item.ab_description }}</td>
-                    <td><img alt="No Image" v-bind:src="'/articleimages/' + item.id + '.jpg'"  @error="imageUrlAlt"></td>
-                    <td><button v-bind:id="'article_'+ item.id" class="article_add"
-                                v-bind:value="item.ab_name" @click="addCart">+</button></td>
+                    <td><img alt="No Image" v-bind:src="'/articleimages/' + item.id + '.jpg'" @error="imageUrlAlt"></td>
+                    <td>
+                        <button v-bind:id="'article_'+ item.id" class="article_add"
+                                v-bind:value="item.ab_name" @click="addCart">+
+                        </button>
+                    </td>
                 </tr>
                 </tbody>
                 <tbody v-else="">
@@ -66,9 +69,13 @@ export default{
                     <td>{{ result.ab_name }}</td>
                     <td>{{ result.ab_price }}</td>
                     <td>{{ result.ab_description }}</td>
-                    <td><img alt="No Image" v-bind:src="'/articleimages/' + result.id + '.jpg'" @error="imageUrlAlt"></td>
-                    <td><button v-bind:id="'article_'+ result.id" class="article_add"
-                                v-bind:value="result.ab_name" @click="addCart">+</button></td>
+                    <td><img alt="No Image" v-bind:src="'/articleimages/' + result.id + '.jpg'" @error="imageUrlAlt">
+                    </td>
+                    <td>
+                        <button v-bind:id="'article_'+ result.id" class="article_add"
+                                v-bind:value="result.ab_name" @click="addCart">+
+                        </button>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -79,5 +86,7 @@ export default{
             <ul id="wishlist">
             </ul>
         </div>
-    </div>`
+        </div>
+        `
+
 }
