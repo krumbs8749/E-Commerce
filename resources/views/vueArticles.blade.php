@@ -99,6 +99,10 @@
             width: 100%;
             text-align: center;
         }
+        .pagination {
+            display: flex;
+            justify-content: center;
+        }
         footer {
             background-color: #111111;
             color: #FFFFFF;
@@ -118,7 +122,7 @@
 <body>
     <div id="app">
         <siteheader categories="{{$articles_categories}}"></siteheader>
-        <sitebody articles="{{$articles}}"></sitebody>
+        <sitebody articles="{{$articles}}" articleslength="{{$articles_length}}"></sitebody>
         <sitefooter></sitefooter>
     </div>
     <script src="{{asset('js/shoppingcart.js')}}"></script>
@@ -134,7 +138,8 @@
           Siteheader,
           Sitebody,
           Sitefooter
-      }
+      },
+
     }).mount('#app')
 
 </script>

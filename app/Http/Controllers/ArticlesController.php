@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models;
+use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -59,10 +60,10 @@ class ArticlesController
             $articles = Models\AbArticle::where("ab_name","ILIKE", '%'. $rd['search'].'%')->get();
         }
         $articlesCategory = Models\AbArticlecategory::pluck('ab_name');
+        $articles_length = count($articles);
 
 
-
-        return view('vueArticles', ['articles' => $articles, 'articles_categories' => $articlesCategory]);
+        return view('vueArticles', ['articles' => $articles, 'articles_categories' => $articlesCategory, 'articles_length' => $articles_length]);
     }
 }
 

@@ -1,19 +1,35 @@
+
+import Pagination from "./pagination.js";
 export default{
-    props:['articles'],
+    props:['articles', 'articleslength'],
+    components: {
+        Pagination
+    },
     data:function (){
         return{
             'search' : null,
             'searchResult' : null,
-            'items': JSON.parse(this.articles)
+            'alLArticles': JSON.parse(this.articles),
+            'items': JSON.parse(this.articles).slice(0, 10),
+            'limit': 10,
+            'offset': 0,
+            'searchedArticlesTotalLength': 0,
+            'art_length': parseInt(this.articleslength)
         }
     },
     watch: {
         search(currentInput){
-            if(currentInput.length >= 3)
-                this.getSearched(currentInput)
+            if(currentInput.length >= 1){
+                this.limit = 5;
+                this.offset = 0;
+                this.getSearched(currentInput);
+            }
             else{
-                this.searchResult = null
-                setAddArticleListener()
+                this.searchResult = null;
+                this.limit = 10;
+                this.offset = 0;
+                this.searchedArticlesTotalLength = 0;
+                setAddArticleListener();
             }
         }
     },
@@ -22,10 +38,15 @@ export default{
             const xhr = new XMLHttpRequest();
             xhr.onreadystatechange = () => {
                 if(xhr.readyState === 4 && xhr.status === 200){
-                    this.$data.searchResult = JSON.parse(xhr.response)
+                    const { articles, articles_length} = JSON.parse(xhr.response)
+                    this.searchResult = articles;
+                    this.searchedArticlesTotalLength = articles_length;
                 }
             }
-            xhr.open('GET', '/api/articles?search=' + currentInput);
+            xhr.open(
+                'GET',
+                `/api/articles?search=${currentInput}&limit=${this.$data.limit}&offset=${this.$data.offset}`
+            );
             xhr.send();
         },
         addCart : function (event){
@@ -33,6 +54,15 @@ export default{
         },
         imageUrlAlt(event) {
             event.target.src = event.target.src.replace(".jpg", ".png")
+        },
+        changePage: function(pageIndex){
+            this.$data.offset = (pageIndex - 1) * this.$data.limit;
+            if(this.$data.search === null){
+                this.$data.items = this.$data.alLArticles.slice(this.$data.offset, this.$data.offset + this.$data.limit )
+            }else {
+                this.getSearched(this.$data.search);
+            }
+
         }
     },
     template: `
@@ -60,7 +90,7 @@ export default{
                                 v-bind:value="item.ab_name" @click="addCart">+</button></td>
                 </tr>
                 </tbody>
-                <tbody v-else="">
+                <tbody v-else>
                 <tr v-for="result in searchResult">
                     <td>{{ result.id }}</td>
                     <td>{{ result.ab_name }}</td>
@@ -72,7 +102,11 @@ export default{
                 </tr>
                 </tbody>
             </table>
+
+            <pagination v-if="searchResult === null"  :articleslength="art_length" :limit="limit" @page-index="changePage"></pagination>
+            <pagination v-if="searchResult !== null"  :articleslength="searchedArticlesTotalLength" :limit="limit" @page-index="changePage"></pagination>
         </div>
+
 
         <div class="cart">
             <h3>Warenkorb</h3>
