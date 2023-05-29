@@ -72,11 +72,11 @@ export default{
                 <table>
                     <thead>
                     <tr>
-                        <td>ID</td>
-                        <td>Name</td>
-                        <td>Price</td>
-                        <td>Description</td>
-                        <td colspan="2">Picture</td>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Description</th>
+                        <th colspan="2">Picture</th>
                     </tr>
                     </thead>
                     <tbody v-if="searchResult === null">

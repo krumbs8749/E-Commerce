@@ -26,6 +26,8 @@ export default {
 
     template: `
         <div class="pagination">
-          <button @click="prev">&lt</button>&nbsp<span>{{pageIndex}}</span>&nbsp<button @click="next">&gt</button>
+          <span @click="prev">&lt;&lt;&nbsp;Prev</span>&nbsp
+          <span>{{pageIndex}}</span>&nbsp
+          <span @click="next">Next&nbsp;&gt;&gt;</span>
         </div>`
 }

@@ -103,9 +103,18 @@
              padding: 0 5px 0 5px;
              border: 1px solid black;
          }
+        td {
+            height: 100px;
+        }
         .pagination {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
+            padding: 0 10px;
+        }
+        .pagination > span {
+            display: block;
+            cursor: pointer;
+            user-select: none;
         }
 
         footer {
