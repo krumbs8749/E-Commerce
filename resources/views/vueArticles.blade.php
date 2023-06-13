@@ -11,7 +11,7 @@
     <!-- Styles -->
 
 </head>
-<body>
+<body class="newSiteBody">
     <div id="app">
         <siteheader @update-type="setType" categories="{{$articles_categories}}"></siteheader>
         <sitebody :type="type" articles="{{$articles}}" articleslength="{{$articles_length}}"></sitebody>

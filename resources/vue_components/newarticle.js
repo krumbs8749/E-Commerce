@@ -8,8 +8,6 @@ export default {
             let art_price = document.querySelector('#art_price').value
             let art_description = document.querySelector('#art_description').value
 
-            event.preventDefault()
-
             let formData = new FormData()
             formData.append("art_name", art_name)
             formData.append("art_price", art_price)
@@ -22,7 +20,17 @@ export default {
 
             console.log(document.getElementById('csrfToken').content)
 
-            let message = document.createElement("p")
+            let oldmessage = (document.getElementById("message") === null)
+
+            let message = null
+            if(oldmessage){
+                message = document.createElement("p")
+                message.setAttribute("id", "message")
+            }
+            else
+                message = document.getElementById("message")
+
+
             xhr.onreadystatechange = function () {
                 if(xhr.readyState === 4){
                     if(xhr.status === 200){
@@ -30,7 +38,9 @@ export default {
                     }else{
                         message.innerText = "Server Fehler"
                     }
-                    document.body.appendChild(message)
+
+                    if(oldmessage)
+                        document.body.appendChild(message)
                 }
             }
 
@@ -40,18 +50,20 @@ export default {
     }
     ,
     template:`
-    <form method="POST" action="...">
+    <fieldset class="newArticleForm">
+    <form class="newArticleForm__form" method="POST" action="...">
 
-    <label for="name">Name:</label><br>
-    <input type="text" id="art_name" name="art_name" required><br>
+    <label class="newArticleForm__form__label" for="name">Name:</label><br>
+    <input class="newArticleForm__form__input" type="text" id="art_name" name="art_name" required><br>
 
-    <label for="price">Price:</label><br>
-    <input type="number" min="0" id="art_price" name="art_price" required><br>
+    <label class="newArticleForm__form__label" for="price">Price:</label><br>
+    <input class="newArticleForm__form__input" type="number" min="0" id="art_price" name="art_price" required><br>
 
-    <label for="name">Description:</label><br>
-    <input type="text" id="art_description" name="art_description" required><br>
+    <label class="newArticleForm__form__label" for="name">Description:</label><br>
+    <input class="newArticleForm__form__input" type="text" id="art_description" name="art_description" required><br>
 
     <br>
-    <button type="submit" @click="sendData">Send</button>
-    </form>`
+    <button class="newArticleForm__form__button--submit" type="submit" @click="sendData">Send</button>
+    </form>
+    </fieldset>`
 }
