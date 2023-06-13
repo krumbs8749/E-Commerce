@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     @vite(['../resources/js/app.js'])
-    @vite(['../resources/css/app.css'])
+    @vite(['../resources/sass/app.scss'])
     <title>Vue Article</title>
 
     <!-- Styles -->
