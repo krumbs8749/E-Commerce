@@ -1,0 +1,5 @@
+Aufgabe 6
+
+1. Bottelneck beim Server wegen AJAX anfrage
+
+2. Die originale Seite geht weg

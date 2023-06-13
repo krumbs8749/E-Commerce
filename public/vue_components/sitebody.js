@@ -57,7 +57,7 @@ export default{
         },
         changePage: function(pageIndex){
             this.$data.offset = (pageIndex - 1) * this.$data.limit;
-            if(this.$data.search === null){
+            if(this.$data.searchResult === null){
                 this.$data.items = this.$data.alLArticles.slice(this.$data.offset, this.$data.offset + this.$data.limit )
             }else {
                 this.getSearched(this.$data.search);
