@@ -41,7 +41,7 @@
             color: $whiteColor;
             cursor: pointer;
 
-            &.item {
+            .item {
                 display: none;
                 position: absolute;
                 top: 45px;
@@ -64,8 +64,6 @@
             }
 
             &:hover{
-                background-color: #111111;
-
                 .item{
                     display: block;
                 }
