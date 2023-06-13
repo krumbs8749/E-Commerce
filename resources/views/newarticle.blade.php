@@ -9,9 +9,9 @@
 
     <!-- Vue.js -->
     @vite(['../resources/js/app.js'])
-
+    @vite(['../resources/sass/app.scss'])
 </head>
-<body id="newArticle">
+<body id="newArticle" class="newArticle">
     <!--
     <script id='script-newarticle' data-token="csrf_token()" src="asset('js/newarticle.js')"></script>
     -->

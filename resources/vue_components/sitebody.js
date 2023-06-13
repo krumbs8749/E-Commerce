@@ -68,9 +68,9 @@ export default{
     template: `
         <div class="main" v-if="type !== 'impressum' ">
             <div>
-                <input id="search" type="text" v-model="search" placeholder="Suchen">
-                <table>
-                    <thead>
+                <input class="main__search" type="text" v-model="search" placeholder="Suchen">
+                <table class="main__table">
+                    <thead class="main__table__header">
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
@@ -79,7 +79,7 @@ export default{
                         <th colspan="2">Picture</th>
                     </tr>
                     </thead>
-                    <tbody v-if="searchResult === null">
+                    <tbody class="main__table__body" v-if="searchResult === null">
                     <tr v-for="item in items">
                         <td>{{ item.id }}</td>
                         <td>{{ item.ab_name }}</td>
@@ -116,7 +116,7 @@ export default{
 
             <div class="cart">
                 <h3>Warenkorb</h3>
-                <ul id="wishlist">
+                <ul class="wishlist">
                 </ul>
             </div>
         </div>

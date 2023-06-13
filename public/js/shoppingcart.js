@@ -18,7 +18,7 @@ function deleteArticleFromDatabse(id){
     xhr.send();
 }
 function removeFromCart(event) {
-    let carts = document.getElementById('wishlist');
+    let carts = document.querySelector('.wishlist');
     // Remove article from the wishlist
     const art_id = event.target.id.split('article_')[1];
     const art_name = event.target.value;
@@ -36,7 +36,7 @@ function removeFromCart(event) {
 }
 
 function addToCart(event){
-    let carts = document.getElementById('wishlist');
+    let carts = document.querySelector('.wishlist');
     const art_id = event.target.id.split('article_')[1];
     const art_name = event.target.value;
 
