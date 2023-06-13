@@ -8,24 +8,13 @@
     <title>New Article</title>
 
     <!-- Vue.js -->
-    <script src="https://unpkg.com/vue@next"></script>
+    @vite(['../resources/js/app.js'])
 
 </head>
-<body id="app">
+<body id="newArticle">
     <!--
     <script id='script-newarticle' data-token="csrf_token()" src="asset('js/newarticle.js')"></script>
     -->
     <new-article></new-article>
 </body>
-<script type="module">
-
-    import NewArticle from "./vue_components/newarticle.js";
-
-    Vue.createApp({
-        components:{
-          NewArticle
-        }
-    }).mount('#app')
-
-</script>
 </html>

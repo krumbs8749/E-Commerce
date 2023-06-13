@@ -5,8 +5,7 @@
  */
 
 import './bootstrap';
-import './vue';
-import { createApp } from 'vue';
+import * as Vue from 'vue';
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
@@ -14,10 +13,35 @@ import { createApp } from 'vue';
  * to use in your application's views. An example is included for you.
  */
 
-const app = createApp({});
+import NewArticle from "../vue_components/newarticle.js";
 
-import ExampleComponent from './components/ExampleComponent.vue';
-app.component('example-component', ExampleComponent);
+Vue.createApp({
+    components:{
+        NewArticle
+    }
+}).mount('#newArticle')
+
+import Siteheader from "../vue_components/siteheader.js";
+import Sitebody from '../vue_components/sitebody.js';
+import Sitefooter from '../vue_components/sitefooter.js';
+
+Vue.createApp({
+    components:{
+        Siteheader,
+        Sitebody,
+        Sitefooter
+    },
+    data: function (){
+        return {
+            type: null
+        }
+    },
+    methods: {
+        setType: function (val) {
+            this.$data.type = val;
+        }
+    }
+}).mount('#app')
 
 /**
  * The following block of code may be used to automatically register your
@@ -36,5 +60,3 @@ app.component('example-component', ExampleComponent);
  * an "id" attribute of "app". This element is included with the "auth"
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
-
-app.mount('#app');
