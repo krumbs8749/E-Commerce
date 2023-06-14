@@ -2,7 +2,7 @@
 
 require "./vendor/autoload.php";
 
-\Ratchet\Client\connect('ws://localhost:8090/chat')->then(function($conn) {
+\Ratchet\Client\connect('ws://localhost:8080/chat')->then(function($conn) {
     $conn->on('message', function($msg) use ($conn) {
         echo "Received: {$msg}\n";
         $conn->close();
