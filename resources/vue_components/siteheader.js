@@ -31,14 +31,17 @@ export default {
         return {menuItems: navigation.content}
     },
     methods: {
-        setType: function () {
+        setMain: function () {
             this.$emit('update-type', 'main');
+        },
+        setLogin: function (){
+            this.$emit('update-type', 'login');
         }
     },
     template: `
     <ul class="nav">
       <li class="nav__name" v-for="item in menuItems">
-        <span class="home" v-if="item.name === 'Home'" @click="setType">{{item.name}}</span>
+        <span class="home" v-if="item.name === 'Home'" @click="setMain">{{item.name}}</span>
           <span v-else="">{{item.name}}</span>
           <ul class="nav__name item" v-if="item.children !== undefined && item.children.length > 0">
             <li class="nav__name item__list" v-for="d in item.children">{{d}}</li>
@@ -47,6 +50,7 @@ export default {
               <li class="nav__name item__list" v-for="d in JSON.parse(this.categories)">{{d}}</li>
           </ul>
       </li>
+      <li><button class="login" @click="setLogin">LOGIN</button></li>
     </ul>
     `
 }
