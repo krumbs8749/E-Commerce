@@ -50,4 +50,8 @@ class AuthController extends Controller
         else $r["auth"]="false";
         return response()->json($r);
     }
+
+    public function verify(){
+
+    }
 }

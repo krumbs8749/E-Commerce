@@ -23,6 +23,7 @@ Route::get('/login', [Controllers\AuthController::class, 'login'])->name('login'
 Route::get('/logout', [Controllers\AuthController::class, 'logout'])->name('logout');
 Route::get('/isloggedin', [Controllers\AuthController::class, 'isloggedin'])->name('haslogin');
 
+Route::get('/login', [Controllers\AuthController::class, 'verify']);
 
 Route::get('/newsite',[Controllers\ArticlesController::class, 'vueArticles']);
 Route::get('/impressum',[Controllers\ArticlesController::class, 'impressum']);
