@@ -18,7 +18,8 @@ class AuthController extends Controller
                                 ->where('ab_mail', '=', $request->post('email'))
                                 ->select('id')
                                 ->get();
-        if($userID->isEmpty()){
+
+        if(is_null($userID) || empty($userID)){
             Models\AbUser::create([
                 "ab_name" => $request->post('username'),
                 "ab_password" => $request->post('password'),
@@ -28,9 +29,9 @@ class AuthController extends Controller
 
         $userID = Models\AbUser::query()->select()->max('id');
 
-        $request->session()->put('abalo_id', $userID[0]['id']);
+        $request->session()->put('abalo_id', $userID);
         $request->session()->put('abalo_time', time());
-        return redirect()->route('haslogin');
+        return redirect()->route('newsite');
     }
 
     public function logout(Request $request) {
