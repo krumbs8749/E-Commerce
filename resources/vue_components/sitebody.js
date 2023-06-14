@@ -2,7 +2,7 @@ import { Page } from '../../node_modules/v-page/dist/v-page.js'
 import Pagination from "./pagination.js";
 import Impressum from "./impressum.js";
 
-const socket = new WebSocket('ws://localhost:8090/chat'); // WebSocket-URL anpassen
+const socket = new WebSocket('ws://localhost:8080/chat'); // WebSocket-URL anpassen
 
 socket.onopen = function(event) {
     console.log('Connected');
