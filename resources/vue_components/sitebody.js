@@ -5,7 +5,14 @@ import Login from "./login.js";
 
 
 export default{
-    props:['articles', 'articleslength', 'type', 'token'],
+    props:[
+        'articles',
+        'articleslength',
+        'type',
+        'token',
+        'myarticle',
+        'userid'
+    ],
     components: {
         VPage: Page,
         Pagination,
@@ -25,6 +32,11 @@ export default{
         }
     },
     watch: {
+        myarticle: function (newVal, oldVal){
+            this.alLArticles = newVal ? JSON.parse(this.articles).filter(d => d.ab_creator_id == 6) : JSON.parse(this.articles)
+            this.items = this.alLArticles.slice(0, 5)
+            console.log(JSON.parse(this.articles), this.userid)
+        },
         search(currentInput){
             if(currentInput.length >= 3){
                 this.offset = 0;
@@ -125,6 +137,7 @@ export default{
                     </tr>
                     </tbody>
                 </table>
+
 
                 <v-page v-if="searchResult === null" :pageSizeMenu="[5,10,15,30]" :total-row="art_length"  align="center" language="de" @change="vPageChange"></v-page>
 <!--                <pagination v-if="searchResult === null"  :articleslength="art_length" :limit="limit" @page-index="changePage"></pagination>-->

@@ -25,8 +25,8 @@ const navigation = {
 };
 
 export default {
-    emits: ['update-type'],
-    props: ['categories', 'enablelogin'],
+    emits: ['update-type', 'myarticle'],
+    props: ['categories', 'enablelogin', 'userid'],
     data() {
         return {menuItems: navigation.content}
     },
@@ -36,6 +36,9 @@ export default {
         },
         setLogin: function (){
             this.$emit('update-type', 'login');
+        },
+        myArticle: function (){
+            this.$emit('myarticle', true);
         }
     },
     template: `
@@ -50,7 +53,8 @@ export default {
               <li class="nav__name item__list" v-for="d in JSON.parse(this.categories)">{{d}}</li>
           </ul>
       </li>
-      <li v-if="this.enablelogin === 'null'"><button class="login" @click="setLogin">LOGIN</button></li>
+      <li v-if="this.enablelogin == 0"><button class="login" @click="setLogin">LOGIN</button></li>
+      <li v-else><button class="showOwnArticle" @click="myArticle">My Article</button></li>
     </ul>
     `
 }

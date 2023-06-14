@@ -15,8 +15,8 @@
 <body class="newSiteBody">
     <input type="hidden" id="userId" name="userId" value="{{$userId}}">
     <div id="app" >
-        <siteheader @update-type="setType" categories="{{$articles_categories}}" enablelogin="{{$enableLogIn}}"></siteheader>
-        <sitebody :type="type" articles="{{$articles}}" articleslength="{{$articles_length}}"  token="{{ csrf_token() }}"></sitebody>
+        <siteheader @update-type="setType" @myarticle="myArticle" categories="{{$articles_categories}}" enablelogin="{{$enableLogIn}}" userid="{{$userId}}"></siteheader>
+        <sitebody :type="type" :myarticle="myarticle" articles="{{$articles}}" articleslength="{{$articles_length}}" userid="{{$userId}}" token="{{ csrf_token() }}"></sitebody>
         <sitefooter @update-type="setType"></sitefooter>
     </div>
     <script src="{{asset('js/shoppingcart.js')}}"></script>

@@ -59,12 +59,12 @@ class ArticlesController
         }else{
             $articles = Models\AbArticle::where("ab_name","ILIKE", '%'. $rd['search'].'%')->get();
         }
+
         $articlesCategory = Models\AbArticlecategory::pluck('ab_name');
         $articles_length = count($articles);
 
-        $enableLogIn = $rd->session()->get('abalo_user') ? $rd->session()->get('abalo_user'): 'null';
-        $userID = $rd->session()->get('abalo_id') ? $rd->session()->get('abalo_id'): 'null';
-
+        $enableLogIn = ($rd->session()->has('abalo_user')) ? $rd->session()->get('abalo_user'): 0;
+        $userID = ($rd->session()->has('abalo_id')) ? $rd->session()->get('abalo_id'): null;
 
         return view('vueArticles', ['articles' => $articles, 'articles_categories' => $articlesCategory, 'articles_length' => $articles_length, 'enableLogIn' => $enableLogIn, 'userId' => $userID],);
     }

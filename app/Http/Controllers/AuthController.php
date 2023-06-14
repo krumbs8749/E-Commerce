@@ -15,20 +15,21 @@ class AuthController extends Controller
         $request->session()->put('abalo_user', $request->post('username'));
         $request->session()->put('abalo_email', $request->post('email'));
         $userID = Models\AbUser::where('ab_name',$request->post('username'))
-                                ->where('ab_mail', '=', $request->post('email'))
+                                ->where('ab_mail', $request->post('email'))
                                 ->select('id')
                                 ->get();
 
-        if(is_null($userID) || empty($userID)){
+        if(empty($userID)){
             Models\AbUser::create([
                 "ab_name" => $request->post('username'),
                 "ab_password" => $request->post('password'),
                 "ab_mail" => $request->post('email'),
             ]);
+            $userID = Models\AbUser::query()->select()->max('id');
         }
-
-        $userID = Models\AbUser::query()->select()->max('id');
-
+        else{
+            $userID = $userID[0]['id'];
+        }
         $request->session()->put('abalo_id', $userID);
         $request->session()->put('abalo_time', time());
         return redirect()->route('newsite');

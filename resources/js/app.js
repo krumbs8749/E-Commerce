@@ -33,12 +33,16 @@ Vue.createApp({
     },
     data: function (){
         return {
-            type: 'main'
+            type: 'main',
+            myarticle: false
         }
     },
     methods: {
         setType: function (val) {
             this.$data.type = val;
+        },
+        myArticle: function(bool){
+            this.$data.myarticle = bool;
         }
     }
 }).mount('#app')
