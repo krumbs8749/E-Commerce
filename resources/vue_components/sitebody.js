@@ -1,9 +1,10 @@
-
+import { Page } from '../../node_modules/v-page/dist/v-page.js'
 import Pagination from "./pagination.js";
 import Impressum from "./impressum.js";
 export default{
     props:['articles', 'articleslength', 'type'],
     components: {
+        VPage: Page,
         Pagination,
         Impressum
     },
@@ -63,6 +64,17 @@ export default{
                 this.getSearched(this.$data.search);
             }
 
+        },
+        vPageChange: function (pInfo){
+            console.log(pInfo)
+            if(this.$data.searchResult === null){
+                this.$data.items = this.$data.alLArticles.slice((pInfo.pageNumber - 1) * pInfo.pageSize, (pInfo.pageNumber - 1) * pInfo.pageSize + pInfo.pageSize )
+            }else {
+                this.$data.offset = (pInfo.pageNumber - 1) * pInfo.pageSize;
+                this.$data.limit = pInfo.pageSize;
+                this.getSearched(this.$data.search);
+
+            }
         }
     },
     template: `
@@ -110,8 +122,10 @@ export default{
                     </tbody>
                 </table>
 
-                <pagination v-if="searchResult === null"  :articleslength="art_length" :limit="limit" @page-index="changePage"></pagination>
-                <pagination v-if="searchResult !== null"  :articleslength="searchedArticlesTotalLength" :limit="limit" @page-index="changePage"></pagination>
+                <v-page v-if="searchResult === null" :pageSizeMenu="[5,10,15,30]" :total-row="art_length"  align="center" language="en" @change="vPageChange"></v-page>
+<!--                <pagination v-if="searchResult === null"  :articleslength="art_length" :limit="limit" @page-index="changePage"></pagination>-->
+                <v-page v-if="searchResult !== null" :pageSizeMenu="[5,10,15,30]" :total-row="searchedArticlesTotalLength"  align="center" language="en" @change="vPageChange"></v-page>
+<!--                <pagination v-if="searchResult !== null"  :articleslength="searchedArticlesTotalLength" :limit="limit" @page-index="changePage"></pagination>-->
             </div>
 
             <div class="cart">
