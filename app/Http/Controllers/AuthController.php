@@ -15,7 +15,7 @@ class AuthController extends Controller
         $request->session()->put('abalo_user', $request->post('username'));
         $request->session()->put('abalo_email', $request->post('email'));
         $userID = Models\AbUser::where('ab_name',$request->post('username'))
-                                ->where('ab_email', '=', $request->post('email'))
+                                ->where('ab_mail', '=', $request->post('email'))
                                 ->select('id')
                                 ->get();
         if($userID->isEmpty()){
@@ -51,7 +51,4 @@ class AuthController extends Controller
         return response()->json($r);
     }
 
-    public function verify(){
-
-    }
 }

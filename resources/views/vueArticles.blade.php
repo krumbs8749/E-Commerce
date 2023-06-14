@@ -15,7 +15,7 @@
 <body class="newSiteBody">
     <div id="app">
         <siteheader @update-type="setType" categories="{{$articles_categories}}"></siteheader>
-        <sitebody :type="type" articles="{{$articles}}" articleslength="{{$articles_length}}"></sitebody>
+        <sitebody :type="type" articles="{{$articles}}" articleslength="{{$articles_length}}" token="{{ csrf_token() }}"></sitebody>
         <sitefooter @update-type="setType"></sitefooter>
     </div>
     <script src="{{asset('js/shoppingcart.js')}}"></script>
