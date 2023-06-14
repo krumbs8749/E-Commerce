@@ -1,6 +1,7 @@
 import { Page } from '../../node_modules/v-page/dist/v-page.js'
 import Pagination from "./pagination.js";
 import Impressum from "./impressum.js";
+import Login from "./login.js";
 
 const socket = new WebSocket('ws://localhost:8080/chat'); // WebSocket-URL anpassen
 
@@ -19,12 +20,14 @@ socket.onmessage = function(event) {
 socket.onclose = function(event) {
     console.log('Connection closed');
 };
+
 export default{
     props:['articles', 'articleslength', 'type'],
     components: {
         VPage: Page,
         Pagination,
-        Impressum
+        Impressum,
+        Login
     },
     data:function (){
         return{
@@ -96,7 +99,7 @@ export default{
         }
     },
     template: `
-        <div class="main" v-if="type !== 'impressum' ">
+        <div class="main" v-if="type === 'main'">
             <div>
                 <input class="main__search" type="text" v-model="search" placeholder="Suchen">
                 <table class="main__table">
@@ -152,7 +155,7 @@ export default{
                 </ul>
             </div>
         </div>
-        <impressum v-else></impressum>
-        `
+        <impressum v-else-if="type === 'impressum'"></impressum>
+        <login v-else-if="type === 'login'"></login>`
 
 }

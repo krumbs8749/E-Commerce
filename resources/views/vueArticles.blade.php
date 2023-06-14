@@ -6,6 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     @vite(['../resources/js/app.js'])
     @vite(['../resources/sass/app.scss'])
+    @vite(['../resources/css/app.css'])
     <title>Vue Article</title>
 
     <!-- Styles -->

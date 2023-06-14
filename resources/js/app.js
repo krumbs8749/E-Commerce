@@ -33,7 +33,7 @@ Vue.createApp({
     },
     data: function (){
         return {
-            type: null
+            type: 'main'
         }
     },
     methods: {
