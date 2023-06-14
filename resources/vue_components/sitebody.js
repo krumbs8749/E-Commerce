@@ -122,9 +122,9 @@ export default{
                     </tbody>
                 </table>
 
-                <v-page v-if="searchResult === null" :pageSizeMenu="[5,10,15,30]" :total-row="art_length"  align="center" language="en" @change="vPageChange"></v-page>
+                <v-page v-if="searchResult === null" :pageSizeMenu="[5,10,15,30]" :total-row="art_length"  align="center" language="de" @change="vPageChange"></v-page>
 <!--                <pagination v-if="searchResult === null"  :articleslength="art_length" :limit="limit" @page-index="changePage"></pagination>-->
-                <v-page v-if="searchResult !== null" :pageSizeMenu="[5,10,15,30]" :total-row="searchedArticlesTotalLength"  align="center" language="en" @change="vPageChange"></v-page>
+                <v-page v-if="searchResult !== null" :pageSizeMenu="[5,10,15,30]" :total-row="searchedArticlesTotalLength"  align="center" language="de" @change="vPageChange"></v-page>
 <!--                <pagination v-if="searchResult !== null"  :articleslength="searchedArticlesTotalLength" :limit="limit" @page-index="changePage"></pagination>-->
             </div>
 
