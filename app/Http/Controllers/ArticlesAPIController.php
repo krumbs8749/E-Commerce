@@ -1,9 +1,13 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
 use App\Models;
 use Illuminate\Http\Request;
+
+use \Ratchet\Client;
+
 
 class ArticlesAPIController
 {
@@ -48,6 +52,27 @@ class ArticlesAPIController
         $id = Models\AbArticle::query()->select()->max('id');
 
         return json_encode(["latest_ID" => $id]);
+    }
+
+    public function APIArticleSold (Request $rd, $id){
+        $article_name = Models\AbArticle::where("id", "=", $id)->select('ab_name', 'ab_creator_id')->get();
+
+        \Ratchet\Client\connect('ws://localhost:8080/chat')->then(function($conn) use ($article_name){
+            $conn->on('message', function($msg) use ($conn) {
+                echo "Received: {$msg}\n";
+            });
+            echo "testing";
+            $conn->send(json_encode([
+                'text'=> "Großartig! Ihr Artikel". $article_name[0]['ab_name'] . " wurde erfolgreich verkauf!",
+                'type' => 'info',
+                'user_id' => $article_name[0]['ab_creator_id']
+            ]));
+            $conn->close();
+
+        }, function ($e) {
+            echo "Could not connect: {$e->getMessage()}\n";
+        });
+        return $article_name[0]['ab_creator_id'];
     }
 }
 

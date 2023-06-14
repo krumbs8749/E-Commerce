@@ -1,6 +1,24 @@
 import { Page } from '../../node_modules/v-page/dist/v-page.js'
 import Pagination from "./pagination.js";
 import Impressum from "./impressum.js";
+
+const socket = new WebSocket('ws://localhost:8090/chat'); // WebSocket-URL anpassen
+
+socket.onopen = function(event) {
+    console.log('Connected');
+};
+
+socket.onmessage = function(event) {
+    console.log({'Received message': JSON.parse(event.data)});
+    const {text, type} = JSON.parse(event.data);
+    if(type === 'alert'){
+        alert(text);
+    }
+};
+
+socket.onclose = function(event) {
+    console.log('Connection closed');
+};
 export default{
     props:['articles', 'articleslength', 'type'],
     components: {

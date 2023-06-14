@@ -7,6 +7,7 @@ use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
 use App\Http\Controllers\WebSocketController;
 
+use \Ratchet\App;
 
 
 class WebSocketServer extends Command
@@ -42,21 +43,11 @@ class WebSocketServer extends Command
      */
     public function handle()
     {
-        // the “$server” variable we’ve defined is an instance of “IoServer” class
-        // which handles input and ouput of the peers connected to the socket,
-        // it wraps an instance of “HttpServer” which receives connection requests
-        // from peers and responds to them, finally the latter wraps the “WsServer”
-        // which is the websocket server manages the websocket connection parameters
-        // between peers such as the protocol version
-        $server = IoServer::factory(
-            new HttpServer(
-                new WsServer(
-                    new WebSocketController()
-                )
-            ),
-            8090,
-            '127.0.0.1:8090/chat'
-        );
-        $server->run();
+
+        // Run the server application through the WebSocket protocol on port 8080
+        $app = new \Ratchet\App('localhost', 8080);
+        $app->route('/chat', new WebSocketController(), array('*'));
+        $app->run();
+
     }
 }

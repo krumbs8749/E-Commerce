@@ -13,6 +13,7 @@ class WebSocketController extends Controller implements MessageComponentInterfac
     protected $clients;
 
     public function __construct() {
+        echo "PORT: 8080\n";
         $this->clients = new \SplObjectStorage;
     }
 
@@ -22,6 +23,7 @@ class WebSocketController extends Controller implements MessageComponentInterfac
     }
 
     public function onMessage(ConnectionInterface $from, $msg) {
+        echo "$msg \n";
         foreach ($this->clients as $client) {
             if ($from != $client) {
                 $client->send($msg);
