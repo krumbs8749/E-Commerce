@@ -26,7 +26,7 @@ const navigation = {
 
 export default {
     emits: ['update-type'],
-    props: ['categories'],
+    props: ['categories', 'enablelogin'],
     data() {
         return {menuItems: navigation.content}
     },
@@ -50,7 +50,7 @@ export default {
               <li class="nav__name item__list" v-for="d in JSON.parse(this.categories)">{{d}}</li>
           </ul>
       </li>
-      <li><button class="login" @click="setLogin">LOGIN</button></li>
+      <li v-if="this.enablelogin === 'null'"><button class="login" @click="setLogin">LOGIN</button></li>
     </ul>
     `
 }

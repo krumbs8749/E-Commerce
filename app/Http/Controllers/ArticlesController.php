@@ -62,8 +62,11 @@ class ArticlesController
         $articlesCategory = Models\AbArticlecategory::pluck('ab_name');
         $articles_length = count($articles);
 
+        $enableLogIn = $rd->session()->get('abalo_user') ? $rd->session()->get('abalo_user'): 'null';
+        $userID = $rd->session()->get('abalo_id') ? $rd->session()->get('abalo_id'): 'null';
 
-        return view('vueArticles', ['articles' => $articles, 'articles_categories' => $articlesCategory, 'articles_length' => $articles_length]);
+
+        return view('vueArticles', ['articles' => $articles, 'articles_categories' => $articlesCategory, 'articles_length' => $articles_length, 'enableLogIn' => $enableLogIn, 'userId' => $userID],);
     }
 
 

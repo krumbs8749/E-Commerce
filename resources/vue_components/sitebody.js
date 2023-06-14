@@ -3,23 +3,6 @@ import Pagination from "./pagination.js";
 import Impressum from "./impressum.js";
 import Login from "./login.js";
 
-const socket = new WebSocket('ws://localhost:8080/chat'); // WebSocket-URL anpassen
-
-socket.onopen = function(event) {
-    console.log('Connected');
-};
-
-socket.onmessage = function(event) {
-    console.log({'Received message': JSON.parse(event.data)});
-    const {text, type} = JSON.parse(event.data);
-    if(type === 'alert'){
-        alert(text);
-    }
-};
-
-socket.onclose = function(event) {
-    console.log('Connection closed');
-};
 
 export default{
     props:['articles', 'articleslength', 'type', 'token'],

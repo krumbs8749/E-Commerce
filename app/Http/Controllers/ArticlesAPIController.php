@@ -64,8 +64,8 @@ class ArticlesAPIController
             echo "testing";
             $conn->send(json_encode([
                 'text'=> "Großartig! Ihr Artikel". $article_name[0]['ab_name'] . " wurde erfolgreich verkauf!",
-                'type' => 'info',
-                'user_id' => $article_name[0]['ab_creator_id']
+                'type' => 'alert',
+                'userId' => $article_name[0]['ab_creator_id']
             ]));
             $conn->close();
 

@@ -13,12 +13,33 @@
 
 </head>
 <body class="newSiteBody">
-    <div id="app">
-        <siteheader @update-type="setType" categories="{{$articles_categories}}"></siteheader>
-        <sitebody :type="type" articles="{{$articles}}" articleslength="{{$articles_length}}" token="{{ csrf_token() }}"></sitebody>
+    <input type="hidden" id="userId" name="userId" value="{{$userId}}">
+    <div id="app" >
+        <siteheader @update-type="setType" categories="{{$articles_categories}}" enablelogin="{{$enableLogIn}}"></siteheader>
+        <sitebody :type="type" articles="{{$articles}}" articleslength="{{$articles_length}}"  token="{{ csrf_token() }}"></sitebody>
         <sitefooter @update-type="setType"></sitefooter>
     </div>
     <script src="{{asset('js/shoppingcart.js')}}"></script>
     <script src="{{asset('js/cookiecheck.js')}}"></script>
+    <script>
+        const uId = document.getElementById('userId').value;
+        const socket = new WebSocket('ws://localhost:8080/chat'); // WebSocket-URL anpassen
+
+        socket.onopen = function(event) {
+            console.log('Connected');
+        };
+
+        socket.onmessage = function(event) {
+            console.log({'Received message': JSON.parse(event.data)}, uId);
+            const {text, type, userId} = JSON.parse(event.data);
+            if(type === 'alert' && userId == uId ){
+                alert(text);
+            }
+        };
+
+        socket.onclose = function(event) {
+            console.log('Connection closed');
+        };
+    </script>
 </body>
 </html>
