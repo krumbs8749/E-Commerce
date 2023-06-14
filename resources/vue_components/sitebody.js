@@ -22,7 +22,7 @@ socket.onclose = function(event) {
 };
 
 export default{
-    props:['articles', 'articleslength', 'type'],
+    props:['articles', 'articleslength', 'type', 'token'],
     components: {
         VPage: Page,
         Pagination,
@@ -156,6 +156,6 @@ export default{
             </div>
         </div>
         <impressum v-else-if="type === 'impressum'"></impressum>
-        <login v-else-if="type === 'login'"></login>`
+        <login :token="this.token" v-else-if="type === 'login'"></login>`
 
 }
