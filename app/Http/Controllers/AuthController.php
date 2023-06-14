@@ -24,8 +24,9 @@ class AuthController extends Controller
                 "ab_password" => $request->post('password'),
                 "ab_mail" => $request->post('email'),
             ]);
-            $userID = Models\AbUser::query()->select()->max('id');
         }
+
+        $userID = Models\AbUser::query()->select()->max('id');
 
         $request->session()->put('abalo_id', $userID[0]['id']);
         $request->session()->put('abalo_time', time());
