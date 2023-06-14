@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>5-ws3-selected-message</title>
+</head>
+<body>
+<script>
+    const socket = new WebSocket('ws://localhost:8080/chat'); // WebSocket-URL anpassen
+    const constantId = 'dev'; // Constant identifier in the client-side JavaScript code
+
+    socket.onopen = function(event) {
+        console.log('Connected');
+    };
+
+    socket.onmessage = function(event) {
+        const message = JSON.parse(event.data);
+        const { text, id } = message;
+        if (id === constantId) {
+            console.log('Message received: ' + text);
+            // Display the text in the web browser
+            document.getElementById('message').textContent = text;
+        }
+    };
+
+    socket.onclose = function(event) {
+        console.log('Connection closed');
+    };
+</script>
+
+<div id="message"></div>
+</body>
+</html>
