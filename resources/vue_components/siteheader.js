@@ -41,6 +41,9 @@ export default {
         myArticle: function (){
             this.bool = !this.bool;
             this.$emit('myarticle', this.bool);
+        },
+        logout: function (){
+            window.location.href = "/logout";
         }
     },
     template: `
@@ -59,6 +62,7 @@ export default {
       <li v-else>
           <button v-if="!this.bool" class="showOwnArticle" @click="myArticle">My Articles</button>
           <button v-else class="showOwnArticle" @click="myArticle">All Articles</button>
+          <button class="showOwnArticle logout" @click="logout">LOGOUT</button>
       </li>
 
     </ul>
