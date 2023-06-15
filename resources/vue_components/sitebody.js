@@ -97,7 +97,7 @@ export default{
         },
         makeItemOffer: function(event){
             const id = event.target.id.split('article_')[1];
-            axios.post('api/articles/'+ id + '/offer')
+            axios.post('/api/articles/'+ id + '/offer', )
         }
     },
     template: `
