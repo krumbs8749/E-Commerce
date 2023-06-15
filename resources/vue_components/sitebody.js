@@ -98,9 +98,6 @@ export default{
         makeItemOffer: function(event){
             const id = event.target.id.split('article_')[1];
             axios.post('api/articles/'+ id + '/offer')
-                .then(response => {
-                   console.log(response);
-                });
         }
     },
     template: `
@@ -119,7 +116,7 @@ export default{
                     </thead>
                     <tbody class="main__table__body" v-if="searchResult === null">
                     <tr v-for="item in items" :id="'article_row_' +  item.id">
-                        <td>{{ item.id }}</td>
+                        <td :id="'displayed_item_' + item.id">{{ item.id }}</td>
                         <td>{{ item.ab_name }}</td>
                         <td>&euro;{{ item.ab_price }}</td>
                         <td>{{ item.ab_description }}</td>

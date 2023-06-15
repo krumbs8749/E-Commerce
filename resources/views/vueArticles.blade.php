@@ -35,9 +35,13 @@
             if(type === 'alert' && userId == uId && content === 'sold'){
                 alert(text);
             }else if(type === 'alert' && userId == uId && content === 'offer'){
+                console.log(itemId)
                 const highlited_row = document.getElementById(`article_row_${itemId}`);
                 highlited_row.style.background = '#00ced1';
-                alert(text);
+                const selectedDisplayedItem = document.getElementById(`displayed_item_${itemId}`)
+                if(selectedDisplayedItem){
+                    alert(text);
+                }
             }
         };
 

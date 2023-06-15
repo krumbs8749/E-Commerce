@@ -88,7 +88,7 @@ class ArticlesAPIController
                 'type' => 'alert',
                 "content" => "offer",
                 'userId' => $article_name[0]['ab_creator_id'],
-                'item' => $article_name[0]['id']
+                'itemId' => $article_name[0]['id']
             ]));
             $conn->close();
 
