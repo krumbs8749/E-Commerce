@@ -48,7 +48,7 @@ class DatabaseSeeder extends Seeder
                     "ab_price" => $data['2'],
                     "ab_description" => $data['3'],
                     "ab_creator_id" => $data['4'],
-                    "ab_createDate" => $data['5'],
+                    "ab_createDate" => \DateTime::createFromFormat('d.m.y H:i', $data['5'])->format('Y-m-d H:i:s'),
                 ]);
             }
             $firstline = false;

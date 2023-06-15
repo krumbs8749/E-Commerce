@@ -25,3 +25,6 @@ Route::post('/articles', [Controllers\ArticlesAPIController::class, 'APIPostArti
 
 Route::post('/shoppingcart', [Controllers\ShoppingCartAPIController::class, 'APIAddShoppingCartItem']);
 Route::delete('/shoppingcart/{shoppingcartId}/articles/{articleId}', [Controllers\ShoppingCartAPIController::class, 'APIDeleteShoppingCartItem']);
+
+Route::post('/articles/{id}/sold', [Controllers\ArticlesAPIController::class, 'APIArticleSold']);
+Route::post('/articles/{id}/offer', [Controllers\ArticlesAPIController::class, 'APIArticleOffer']);

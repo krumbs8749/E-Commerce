@@ -1,3 +1,5 @@
+@use "body";
+
 // Fonts
 @import url('https://fonts.bunny.net/css?family=Nunito');
 
@@ -6,3 +8,130 @@
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+@mixin flexbox($display: flex){
+    display: $display;
+}
+
+.newSiteBody {
+    margin: 0;
+    @include flexbox(flex);
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    overflow-x: hidden;
+
+    .nav {
+        @include flexbox(flex);
+        flex-direction: row;
+        justify-content: space-around;
+        height: 3rem;
+        width: 100vw;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333333;
+
+        &__name {
+            display: block;
+            text-align: center;
+            padding: 16px;
+            text-decoration: none;
+            color: $whiteColor;
+            cursor: pointer;
+
+            .item {
+                display: none;
+                position: absolute;
+                top: 45px;
+                padding: 5px;
+                width: 250px;
+                background-color: #333333;
+
+                &__list {
+                    display: block;
+                    text-align: left;
+                    padding: 5px;
+                    text-decoration: none;
+                    color: $whiteColor;
+                    cursor: pointer;
+
+                    &:hover{
+                        background-color: #111111;
+                    }
+                }
+            }
+
+            &:hover{
+                .item{
+                    display: block;
+                }
+            }
+        }
+   }
+
+    .pagination {
+        @include flexbox(flex);
+        justify-content: space-between;
+        padding: 0 10px;
+
+        span {
+            display: block;
+            cursor: pointer;
+            user-select: none;
+        }
+    }
+    .main{
+        display: grid;
+        width: 100%;
+        min-height: 85vh;
+        grid-template-columns: 70% 30%;
+
+        &__search {
+            width: 96%;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+    }
+    .login{
+        margin-top: 10px;
+    }
+}
+
+.newArticle{
+    padding-top: 100px;
+    display: grid;
+    place-items: center;
+
+    .newArticleForm{
+        height: 500px;
+        width: 500px;
+        padding: 20px;
+        color: black;
+        background: #2d3748;
+
+        &__form{
+            width: 100%;
+            height: 100%;
+
+            &__label{
+               background: #9ca3af;
+                padding: 0 10px;
+                margin-top: 30px;
+            }
+            &__input{
+                width: 100%;
+            }
+            &__button--submit{
+                margin: 50px auto 0 auto;
+                width: 100%;
+            }
+        }
+    }
+
+}
+
+

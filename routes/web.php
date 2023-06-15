@@ -23,8 +23,9 @@ Route::get('/login', [Controllers\AuthController::class, 'login'])->name('login'
 Route::get('/logout', [Controllers\AuthController::class, 'logout'])->name('logout');
 Route::get('/isloggedin', [Controllers\AuthController::class, 'isloggedin'])->name('haslogin');
 
+Route::post('/login', [Controllers\AuthController::class, 'login']);
 
-Route::get('/newsite',[Controllers\ArticlesController::class, 'vueArticles']);
+Route::get('/newsite',[Controllers\ArticlesController::class, 'vueArticles'])->name('newsite');
 Route::get('/impressum',[Controllers\ArticlesController::class, 'impressum']);
 
 Route::get('/articles', [Controllers\ArticlesController::class, 'outputArticles'])->name('outputArticles');

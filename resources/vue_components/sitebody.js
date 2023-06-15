@@ -1,11 +1,25 @@
-
+import { Page } from '../../node_modules/v-page/dist/v-page.js'
 import Pagination from "./pagination.js";
 import Impressum from "./impressum.js";
+import Login from "./login.js";
+
+import axios from "axios";
+
+
 export default{
-    props:['articles', 'articleslength', 'type'],
+    props:[
+        'articles',
+        'articleslength',
+        'type',
+        'token',
+        'myarticle',
+        'userid'
+    ],
     components: {
+        VPage: Page,
         Pagination,
-        Impressum
+        Impressum,
+        Login
     },
     data:function (){
         return{
@@ -16,10 +30,16 @@ export default{
             'limit': 5,
             'offset': 0,
             'searchedArticlesTotalLength': 0,
-            'art_length': parseInt(this.articleslength)
+            'art_length': parseInt(this.articleslength),
+            'itemsWithOffer': []
         }
     },
     watch: {
+        myarticle: function (newVal, oldVal){
+            this.alLArticles = newVal ? JSON.parse(this.articles).filter(d => d.ab_creator_id == this.userid) : JSON.parse(this.articles)
+            this.items = this.alLArticles.slice(0, 5)
+            this.art_length = this.alLArticles.length;
+        },
         search(currentInput){
             if(currentInput.length >= 3){
                 this.offset = 0;
@@ -57,20 +77,35 @@ export default{
         },
         changePage: function(pageIndex){
             this.$data.offset = (pageIndex - 1) * this.$data.limit;
-            if(this.$data.search === null){
+            if(this.$data.searchResult === null){
                 this.$data.items = this.$data.alLArticles.slice(this.$data.offset, this.$data.offset + this.$data.limit )
             }else {
                 this.getSearched(this.$data.search);
             }
 
+        },
+        vPageChange: function (pInfo){
+            console.log(pInfo)
+            if(this.$data.searchResult === null){
+                this.$data.items = this.$data.alLArticles.slice((pInfo.pageNumber - 1) * pInfo.pageSize, (pInfo.pageNumber - 1) * pInfo.pageSize + pInfo.pageSize )
+            }else {
+                this.$data.offset = (pInfo.pageNumber - 1) * pInfo.pageSize;
+                this.$data.limit = pInfo.pageSize;
+                this.getSearched(this.$data.search);
+
+            }
+        },
+        makeItemOffer: function(event){
+            const id = event.target.id.split('article_')[1];
+            axios.post('/api/articles/'+ id + '/offer', )
         }
     },
     template: `
-        <div class="main" v-if="type !== 'impressum' ">
+        <div class="main" v-if="type === 'main'">
             <div>
-                <input id="search" type="text" v-model="search" placeholder="Suchen">
-                <table>
-                    <thead>
+                <input class="main__search" type="text" v-model="search" placeholder="Suchen">
+                <table class="main__table">
+                    <thead class="main__table__header">
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
@@ -79,16 +114,20 @@ export default{
                         <th colspan="2">Picture</th>
                     </tr>
                     </thead>
-                    <tbody v-if="searchResult === null">
-                    <tr v-for="item in items">
-                        <td>{{ item.id }}</td>
+                    <tbody class="main__table__body" v-if="searchResult === null">
+                    <tr v-for="item in items" :id="'article_row_' +  item.id">
+                        <td :id="'displayed_item_' + item.id">{{ item.id }}</td>
                         <td>{{ item.ab_name }}</td>
                         <td>&euro;{{ item.ab_price }}</td>
                         <td>{{ item.ab_description }}</td>
                         <td><img alt="No Image" v-bind:src="'/articleimages/' + item.id + '.jpg'" @error="imageUrlAlt"></td>
                         <td>
-                            <button v-bind:id="'article_'+ item.id" class="article_add"
+                            <button v-if="!this.myarticle" v-bind:id="'article_'+ item.id" class="article_add"
                                     v-bind:value="item.ab_name" @click="addCart">+
+                            </button>
+                            <button v-if="this.myarticle" v-bind:id="'article_'+ item.id" class="article_add"
+                                    v-bind:value="item.ab_name" @click="makeItemOffer">
+                                Artikel jetzt als Angebot anbiete
                             </button>
                         </td>
                     </tr>
@@ -110,17 +149,20 @@ export default{
                     </tbody>
                 </table>
 
-                <pagination v-if="searchResult === null"  :articleslength="art_length" :limit="limit" @page-index="changePage"></pagination>
-                <pagination v-if="searchResult !== null"  :articleslength="searchedArticlesTotalLength" :limit="limit" @page-index="changePage"></pagination>
+
+                <v-page v-if="searchResult === null" :pageSizeMenu="[5,10,15,30]" :total-row="art_length"  align="center" language="de" @change="vPageChange"></v-page>
+<!--                <pagination v-if="searchResult === null"  :articleslength="art_length" :limit="limit" @page-index="changePage"></pagination>-->
+                <v-page v-if="searchResult !== null" :pageSizeMenu="[5,10,15,30]" :total-row="searchedArticlesTotalLength"  align="center" language="de" @change="vPageChange"></v-page>
+<!--                <pagination v-if="searchResult !== null"  :articleslength="searchedArticlesTotalLength" :limit="limit" @page-index="changePage"></pagination>-->
             </div>
 
             <div class="cart">
                 <h3>Warenkorb</h3>
-                <ul id="wishlist">
+                <ul class="wishlist">
                 </ul>
             </div>
         </div>
-        <impressum v-else></impressum>
-        `
+        <impressum v-else-if="type === 'impressum'"></impressum>
+        <login :token="this.token" v-else-if="type === 'login'"></login>`
 
 }

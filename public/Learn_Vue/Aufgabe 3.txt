@@ -1,0 +1,16 @@
+Vue.js
+
+Motivation
+ - Ein Framework zu entwickeln, der die Interaktion von Views vereinfachen.
+
+Backbone Nachteil
+ - Evan fand, dass Backbone nur ein Applikation Struktur Programm ist. Backbone bietet keine Lösung für die Interaktion von Views.
+
+Laravel und Vue
+ - Der Gründer fand, dass der Einstieg von Vue viel einfacher als alle andere Framework. Vue braucht keinen komplexen Kompilationprogramm und man kann die Bilbliothek einfach über CDN mit der HTML Datei verbinden
+
+Angular -> Vue
+- V2 von Angular ist komplexer als V1 und sieht ganz anders aus.
+
+Unsere Meinung
+- Die Einfachheit.
