@@ -117,7 +117,7 @@ export default{
                     </tr>
                     </thead>
                     <tbody class="main__table__body" v-if="searchResult === null">
-                    <tr v-for="item in items">
+                    <tr v-for="item in items" :id="'article_row_' +  item.id">
                         <td>{{ item.id }}</td>
                         <td>{{ item.ab_name }}</td>
                         <td>&euro;{{ item.ab_price }}</td>

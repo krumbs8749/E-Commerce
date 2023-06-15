@@ -76,7 +76,7 @@ class ArticlesAPIController
         return $article_name[0]['ab_creator_id'];
     }
     public function APIArticleOffer (Request $rd, $id){
-        $article_name = Models\AbArticle::where("id", "=", $id)->select('ab_name', 'ab_creator_id')->get();
+        $article_name = Models\AbArticle::where("id", "=", $id)->select('id', 'ab_name', 'ab_creator_id')->get();
 
         \Ratchet\Client\connect('ws://localhost:8080/chat')->then(function($conn) use ($article_name){
             $conn->on('message', function($msg) use ($conn) {
@@ -84,10 +84,11 @@ class ArticlesAPIController
             });
             echo "testing";
             $conn->send(json_encode([
-                'text'=> "Der Artikel" . $article_name[0]['ab_creator_id'] . "wird nun günstiger angeboten! Greifen Sie schnell zu.",
+                'text'=> "Der Artikel " . $article_name[0]['ab_name'] . " wird nun günstiger angeboten! Greifen Sie schnell zu.",
                 'type' => 'alert',
                 "content" => "offer",
-                'userId' => $article_name[0]['ab_creator_id']
+                'userId' => $article_name[0]['ab_creator_id'],
+                'item' => $article_name[0]['id']
             ]));
             $conn->close();
 
@@ -97,4 +98,5 @@ class ArticlesAPIController
         return $article_name[0]['ab_creator_id'];
     }
 }
+
 

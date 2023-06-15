@@ -31,10 +31,12 @@
 
         socket.onmessage = function(event) {
             console.log({'Received message': JSON.parse(event.data)}, uId);
-            const {text, type, userId, content} = JSON.parse(event.data);
+            const {text, type, userId, content, itemId} = JSON.parse(event.data);
             if(type === 'alert' && userId == uId && content === 'sold'){
                 alert(text);
             }else if(type === 'alert' && userId == uId && content === 'offer'){
+                const highlited_row = document.getElementById(`article_row_${itemId}`);
+                highlited_row.style.background = '#00ced1';
                 alert(text);
             }
         };
