@@ -6,6 +6,7 @@
 
 import './bootstrap';
 import * as Vue from 'vue';
+import axios from 'axios';
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin

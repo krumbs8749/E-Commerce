@@ -84,7 +84,7 @@ class ArticlesAPIController
             });
             echo "testing";
             $conn->send(json_encode([
-                'text'=> "Der Artikel" . $article_name[0]['ab_creator_id'] . "wird nun günstiger angeboten! Greifen Sie schnell zu.",
+                'text'=> "Der Artikel " . $article_name[0]['ab_name'] . " wird nun günstiger angeboten! Greifen Sie schnell zu.",
                 'type' => 'alert',
                 "content" => "offer",
                 'userId' => $article_name[0]['ab_creator_id']
