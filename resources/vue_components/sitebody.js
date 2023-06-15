@@ -3,6 +3,8 @@ import Pagination from "./pagination.js";
 import Impressum from "./impressum.js";
 import Login from "./login.js";
 
+import axios from "axios";
+
 
 export default{
     props:[
@@ -28,14 +30,15 @@ export default{
             'limit': 5,
             'offset': 0,
             'searchedArticlesTotalLength': 0,
-            'art_length': parseInt(this.articleslength)
+            'art_length': parseInt(this.articleslength),
+            'itemsWithOffer': []
         }
     },
     watch: {
         myarticle: function (newVal, oldVal){
-            this.alLArticles = newVal ? JSON.parse(this.articles).filter(d => d.ab_creator_id == 6) : JSON.parse(this.articles)
+            this.alLArticles = newVal ? JSON.parse(this.articles).filter(d => d.ab_creator_id == this.userid) : JSON.parse(this.articles)
             this.items = this.alLArticles.slice(0, 5)
-            console.log(JSON.parse(this.articles), this.userid)
+            this.art_length = this.alLArticles.length;
         },
         search(currentInput){
             if(currentInput.length >= 3){
@@ -91,6 +94,12 @@ export default{
                 this.getSearched(this.$data.search);
 
             }
+        },
+        makeItemOffer: function(event){
+            const id = event.target.id.split('article_')[1];
+            const axios = new axios();
+
+
         }
     },
     template: `
@@ -115,8 +124,12 @@ export default{
                         <td>{{ item.ab_description }}</td>
                         <td><img alt="No Image" v-bind:src="'/articleimages/' + item.id + '.jpg'" @error="imageUrlAlt"></td>
                         <td>
-                            <button v-bind:id="'article_'+ item.id" class="article_add"
+                            <button v-if="!this.myarticle" v-bind:id="'article_'+ item.id" class="article_add"
                                     v-bind:value="item.ab_name" @click="addCart">+
+                            </button>
+                            <button v-if="this.myarticle" v-bind:id="'article_'+ item.id" class="article_add"
+                                    v-bind:value="item.ab_name" @click="makeItemOffer">
+                                Artikel jetzt als Angebot anbiete
                             </button>
                         </td>
                     </tr>

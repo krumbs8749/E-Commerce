@@ -65,6 +65,28 @@ class ArticlesAPIController
             $conn->send(json_encode([
                 'text'=> "Großartig! Ihr Artikel". $article_name[0]['ab_name'] . " wurde erfolgreich verkauf!",
                 'type' => 'alert',
+                "content" => "sold",
+                'userId' => $article_name[0]['ab_creator_id']
+            ]));
+            $conn->close();
+
+        }, function ($e) {
+            echo "Could not connect: {$e->getMessage()}\n";
+        });
+        return $article_name[0]['ab_creator_id'];
+    }
+    public function APIArticleOffer (Request $rd, $id){
+        $article_name = Models\AbArticle::where("id", "=", $id)->select('ab_name', 'ab_creator_id')->get();
+
+        \Ratchet\Client\connect('ws://localhost:8080/chat')->then(function($conn) use ($article_name){
+            $conn->on('message', function($msg) use ($conn) {
+                echo "Received: {$msg}\n";
+            });
+            echo "testing";
+            $conn->send(json_encode([
+                'text'=> "Der Artikel" . $article_name[0]['ab_creator_id'] . "wird nun günstiger angeboten! Greifen Sie schnell zu.",
+                'type' => 'alert',
+                "content" => "offer",
                 'userId' => $article_name[0]['ab_creator_id']
             ]));
             $conn->close();

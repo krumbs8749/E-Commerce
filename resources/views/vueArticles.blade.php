@@ -31,8 +31,10 @@
 
         socket.onmessage = function(event) {
             console.log({'Received message': JSON.parse(event.data)}, uId);
-            const {text, type, userId} = JSON.parse(event.data);
-            if(type === 'alert' && userId == uId ){
+            const {text, type, userId, content} = JSON.parse(event.data);
+            if(type === 'alert' && userId == uId && content === 'sold'){
+                alert(text);
+            }else if(type === 'alert' && userId == uId && content === 'offer'){
                 alert(text);
             }
         };

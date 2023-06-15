@@ -27,8 +27,9 @@ const navigation = {
 export default {
     emits: ['update-type', 'myarticle'],
     props: ['categories', 'enablelogin', 'userid'],
+
     data() {
-        return {menuItems: navigation.content}
+        return {menuItems: navigation.content, bool: false}
     },
     methods: {
         setMain: function () {
@@ -38,7 +39,8 @@ export default {
             this.$emit('update-type', 'login');
         },
         myArticle: function (){
-            this.$emit('myarticle', true);
+            this.bool = !this.bool;
+            this.$emit('myarticle', this.bool);
         }
     },
     template: `
@@ -54,7 +56,11 @@ export default {
           </ul>
       </li>
       <li v-if="this.enablelogin == 0"><button class="login" @click="setLogin">LOGIN</button></li>
-      <li v-else><button class="showOwnArticle" @click="myArticle">My Article</button></li>
+      <li v-else>
+          <button v-if="!this.bool" class="showOwnArticle" @click="myArticle">My Articles</button>
+          <button v-else class="showOwnArticle" @click="myArticle">All Articles</button>
+      </li>
+
     </ul>
     `
 }
