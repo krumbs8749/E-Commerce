@@ -122,10 +122,10 @@ export default{
                         <td>{{ item.ab_description }}</td>
                         <td><img alt="No Image" v-bind:src="'/articleimages/' + item.id + '.jpg'" @error="imageUrlAlt"></td>
                         <td>
-                            <button v-if="!this.myarticle" v-bind:id="'article_'+ item.id" class="article_add"
+                            <button v-if="!(item.ab_creator_id == this.userid)" v-bind:id="'article_'+ item.id" class="article_add"
                                     v-bind:value="item.ab_name" @click="addCart">+
                             </button>
-                            <button v-if="this.myarticle" v-bind:id="'article_'+ item.id" class="article_add"
+                            <button v-if="item.ab_creator_id == this.userid" v-bind:id="'article_'+ item.id" class="article_add"
                                     v-bind:value="item.ab_name" @click="makeItemOffer">
                                 Artikel jetzt als Angebot anbiete
                             </button>
